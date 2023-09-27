@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Manzana",
+    "description": "Roja",
+    "price": 200,
+    "thumbnail": "Prueba",
+    "code": 123,
+    "stock": 200,
+    "id": "d63d5e82-80d0-4baf-a413-3494c274629d"
+  },
+  {
+    "title": "Banana",
+    "description": "Verde",
+    "price": 500,
+    "thumbnail": "Prueba",
+    "code": 134,
+    "stock": 200,
+    "id": "915699fb-3874-47d0-ab6c-89da9394d32d"
+  },
+  {
+    "title": "Uva",
+    "description": "Violeta",
+    "price": 986,
+    "thumbnail": "Prueba",
+    "code": 23,
+    "stock": 200,
+    "id": "0a462041-90cb-4d32-8b54-60cbcd24dff1"
+  },
+  {
+    "title": "Mandarina",
+    "description": "Naranja",
+    "price": 75,
+    "thumbnail": "Prueba",
+    "code": 9,
+    "stock": 200,
+    "id": "8734de2a-6b7f-4bfe-b5b2-d5f3928fda24"
+  },
+  {
+    "title": "Naranja",
+    "description": "Naranja",
+    "price": 850,
+    "thumbnail": "Prueba",
+    "code": 98,
+    "stock": 200,
+    "id": "41b61191-f5ce-4666-9274-297e5ef377fe"
+  },
+  {
+    "title": "Manzana",
+    "description": "Roja",
+    "price": 200,
+    "thumbnail": "Prueba",
+    "code": 7459,
+    "stock": 200,
+    "id": "e40efda0-5922-4a6b-bd89-91282daecbe2"
+  }
+]
