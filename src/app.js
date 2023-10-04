@@ -1,26 +1,26 @@
-import Express from "express";
-import { productos } from "./clases.js";
+import express from "express";
+import { cartsRouter } from "./routes/carts.router.js"
+import { __dirname } from "./utils.js";
+import path from "path"
+import { productsRouter } from "./routes/products.routes.js";
 
-
-const app = Express()
-
-app.get("/products", async (req, res) => {
-    const limitQuery = req.query.limit
-    if (limitQuery) {
-        const arrayProd = await productos.getProducts()
-        const newArray = arrayProd.slice(0, limitQuery)
-        res.json(newArray)
-    } else {
-        res.json(await productos.getProducts())
-    }
-})
-
-app.get("/products/:pid", async (req, res) => {
-    const idParam = req.params.pid
-    res.json(await productos.getProductById(idParam))
-})
-
-
+const app = express()
 const PORT = 8080
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/api/products", productsRouter)
+app.use("/api/carts", cartsRouter)
+
 app.listen(PORT, () => console.log(`Servicdor escuchando http://localhost:${PORT}/`));
+
+//Atrapa todas las rutas que no existan
+app.get("*", (req, res) => {
+    return res.status(404).json({
+        status: "error",
+        msg: "Ruta no encontrada",
+        data: {}
+    })
+})

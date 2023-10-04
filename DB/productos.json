@@ -52,5 +52,24 @@
     "code": 7459,
     "stock": 200,
     "id": "e40efda0-5922-4a6b-bd89-91282daecbe2"
+  },
+  {
+    "title": "Naranjo",
+    "description": "Naranjo",
+    "price": 850,
+    "thumbnail": "Prueba",
+    "code": 7895,
+    "stock": 200,
+    "picture": "http://localhost:8080/",
+    "id": "0bf83e3a-b35c-49cc-be05-6ea025762ee6"
+  },
+  {
+    "title": "Toronja",
+    "description": "Amarilla",
+    "price": "800",
+    "code": "9874",
+    "stock": "700",
+    "picture": "http://localhost:8080/Capture001.png",
+    "id": "66194d0a-560f-40e8-aff8-53dd69f4c81b"
   }
 ]
