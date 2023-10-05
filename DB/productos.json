@@ -45,15 +45,6 @@
     "id": "41b61191-f5ce-4666-9274-297e5ef377fe"
   },
   {
-    "title": "Manzana",
-    "description": "Roja",
-    "price": 200,
-    "thumbnail": "Prueba",
-    "code": 7459,
-    "stock": 200,
-    "id": "e40efda0-5922-4a6b-bd89-91282daecbe2"
-  },
-  {
     "title": "Naranjo",
     "description": "Naranjo",
     "price": 850,
@@ -66,10 +57,20 @@
   {
     "title": "Toronja",
     "description": "Amarilla",
-    "price": "800",
+    "price": 20,
     "code": "9874",
     "stock": "700",
     "picture": "http://localhost:8080/Capture001.png",
     "id": "66194d0a-560f-40e8-aff8-53dd69f4c81b"
+  },
+  {
+    "title": "Toronja",
+    "description": "Amarilla",
+    "price": 20,
+    "boolean": true,
+    "code": "12578",
+    "stock": "700",
+    "picture": "http://localhost:8080/",
+    "id": "a86df342-45f2-4cf4-8884-7db2a0c36a62"
   }
 ]

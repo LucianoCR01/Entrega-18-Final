@@ -2,5 +2,14 @@
   {
     "idCarrito": "4b297dcc-12f7-4609-abd3-73d444d81d8b",
     "productos": []
+  },
+  {
+    "idCarrito": "f44709e9-f1be-4fc8-a7c1-b72244c5b541",
+    "productos": [
+      {
+        "id": "66194d0a-560f-40e8-aff8-53dd69f4c81b",
+        "quantity": 4
+      }
+    ]
   }
 ]

@@ -11,10 +11,19 @@ class ProductManager {
         this.products = products
     }
 
+    async #writeFile(data) {
+        fs.writeFileSync(this.path, JSON.stringify(data))
+    }
+
+    async #readFile() {
+        const readProducts = await fs.promises.readFile(this.path, "utf-8")
+        return JSON.parse(readProducts)
+    }
+
     addProduct(newProduct) {
         let id = crypto.randomUUID()
         let argumentos = Object.keys(newProduct).length ?? 0
-        if (argumentos < 6) {
+        if (argumentos < 7) {
             return console.log("Faltan argumentos")
         }
         else {
@@ -25,21 +34,17 @@ class ProductManager {
                 this.products.push(
                     newProduct
                 );
-                const productsString = JSON.stringify(this.products, null, 2)
-                fs.writeFileSync(this.path, productsString)
+                this.#writeFile(this.products, null, 2)
             }
         }
     }
 
     async getProducts() {
         if (fs.existsSync(this.path)) {
-            let productsList = await fs.promises.readFile(this.path, "utf-8")
-            productsList = JSON.parse(productsList)
-            return productsList
+            return this.#readFile()
         } else {
             console.log("Error el archivo no existe")
         }
-
     }
 
     async getProductById(id) {
@@ -47,7 +52,8 @@ class ProductManager {
         let existID = productsList.find(e => e.id === id)
         if (existID == undefined) {
             return "not found"
-        } else return existID
+        }
+        return existID
     }
 
     async updateProduct(idActualizar, campoActualizar, actualizacion) {
@@ -58,7 +64,7 @@ class ProductManager {
             if (existID !== undefined) {
                 existID[campoActualizar] = actualizacion
                 this.products.splice(indexID, 1, existID)
-                fs.writeFileSync(this.path, JSON.stringify(this.products))
+                this.#writeFile(this.products)
             }
         } else if (campoActualizar == "id") {
             console.log("no se puede cambiar el ID")
@@ -68,11 +74,9 @@ class ProductManager {
     }
 
     async deleteProduct(idDelete) {
-        let productDelete = await fs.promises.readFile(this.path, "utf-8")
-        productDelete = JSON.parse(productDelete)
-        let indexID = productDelete.findIndex(e => e.id == idDelete)
-        productDelete.splice(indexID, 1)
-        fs.writeFileSync(this.path, JSON.stringify(productDelete))
+        let data = await this.#readFile()
+        let indexID = data.filter(e => e.id !== idDelete)
+        this.#writeFile(indexID)
     }
 }
 
