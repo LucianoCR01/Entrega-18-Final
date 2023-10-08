@@ -72,5 +72,15 @@
     "stock": "700",
     "picture": "http://localhost:8080/",
     "id": "a86df342-45f2-4cf4-8884-7db2a0c36a62"
+  },
+  {
+    "title": "papa",
+    "description": "marron",
+    "price": "200",
+    "boolean": "true",
+    "code": "122345678",
+    "stock": "966",
+    "picture": "http://localhost:8080/frutas-y-verduras.jpg",
+    "id": "212e7b9e-9e93-471c-83e4-0c619fee2da6"
   }
 ]

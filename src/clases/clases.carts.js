@@ -55,8 +55,9 @@ class CartsManager {
             cartSearch.productos = prodAcortado
             this.carts.slice(busProdIndex, 1, cartSearch)
             this.#writeFile(this.carts)
+            return { actualizacion: "Producto agregado al carrito" }
         } else {
-            console.log("Verifique que los ID sean correctos")
+            return { error: "El ID del carrito o el ID del producto estan mal" }
         }
     }
 

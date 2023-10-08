@@ -75,8 +75,13 @@ class ProductManager {
 
     async deleteProduct(idDelete) {
         let data = await this.#readFile()
-        let indexID = data.filter(e => e.id !== idDelete)
-        this.#writeFile(indexID)
+        let existID = data.find(e => e.id == idDelete)
+        if (existID !== undefined) {
+            let indexID = data.filter(e => e.id !== idDelete)
+            this.#writeFile(indexID)
+            return { actualizacion: "Producto eliminado" }
+        }
+        return { error: "producto no encontrado" }
     }
 }
 

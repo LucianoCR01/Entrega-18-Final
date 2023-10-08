@@ -1,3 +1,5 @@
+
+////////////////////////Multer ////////////////////////
 import multer from "multer";
 
 const storage = multer.diskStorage({
@@ -11,6 +13,7 @@ const storage = multer.diskStorage({
 
 export const uploader = multer({ storage });
 
+///////////////////Dirname y Filename///////////////////////////////
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
 import path from "path";
 import { fileURLToPath } from "url";

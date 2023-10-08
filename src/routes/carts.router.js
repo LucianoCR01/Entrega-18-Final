@@ -20,12 +20,13 @@ cartsRouter.get("/:cid", (req, res) => {
     })
 })
 
-cartsRouter.post("/:cid/product/:pid", (req, res) => {
+cartsRouter.post("/:cid/product/:pid", async (req, res) => {
     const idCart = req.params.cid
     const idProduct = req.params.pid
-    return res.status(200).json({
-        status: "success",
-        msg: "Producto Agregado",
-        data: carts.agregarProductos(idCart, idProduct)
-    })
+    res.json(await carts.agregarProductos(idCart, idProduct))
+    // return res.status(200).json({
+    //     status: "success",
+    //     msg: "Producto Agregado",
+    //     data: carts.agregarProductos(idCart, idProduct)
+    // })
 })
