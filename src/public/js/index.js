@@ -30,8 +30,8 @@ formProducts.onsubmit = (e) => {
 };
 
 socket.on("listProdSocke", listProdSocke => {
-    //window.location.reload();
-    socket.emit('listProdSocke', listProdSocke);
+    window.location.reload();
+    //socket.emit('listProdSocke', listProdSocke);
 })
 
 formeliminar.onsubmit = (e) => {
@@ -42,6 +42,6 @@ formeliminar.onsubmit = (e) => {
 };
 
 socket.on("delProdSocke", delProdSocke => {
-    //window.location.reload();
-    document.tbody.innerHTML = delProdSocke
+    window.location.reload();
+    //document.tbody.innerHTML = delProdSocke
 })
