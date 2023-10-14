@@ -43,20 +43,22 @@ formeliminar.onsubmit = (e) => {
 socket.on("delProdSocke", delProdSocke => {
     //window.location.reload();
     let tabla = document.getElementById("tabla")
-
+    console.log(tabla)
+    document.getElementById("jsonBtn").addEventListener("click", mostrarTabla)
     function mostrarTabla() {
-        console.log("hola")
-        fetch("C:/Users/Luciano/Desktop/Entrega-3/DB/productos.json")
-            .then(data => data.json())
-            .then(data2 => {
-                console.log(data2)
-                dibujarTabla(data2)
+        fetch("http://localhost:8080/api/products")
+            .then(function (res) {
+                return res.json()
+            })
+            .then(function (data) {
+                dibujarTabla(data)
             })
     }
 
-    function dibujarTabla(datos) {
-        tabla.innerHTML = ""
-        for (let valor of datos) {
+    async function dibujarTabla(datos) {
+        console.log(datos)
+        tabla.innerHTML = "";
+        for (let valor of [datos]) {
             tabla.innerHTML += `
             <tr>
                 <th>${valor.title}</th>
@@ -64,4 +66,5 @@ socket.on("delProdSocke", delProdSocke => {
             `
         }
     }
+
 })
