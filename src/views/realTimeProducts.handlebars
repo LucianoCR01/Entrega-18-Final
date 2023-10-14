@@ -1,6 +1,6 @@
 <div>
     <h1>La lista de productos es: </h1>
-    <tbody id="productListUpdated">
+    <tbody id="tabla">
         {{#each arrayProd}}
         <ul>
             <li>Nombre : {{this.title}}</li>
@@ -79,7 +79,8 @@
             placeholder="ID producto a eliminar" />
     </div>
     <div style="display: flex; justify-content: center; align-items: center">
-        <input type="submit" value="Eliminar Producto" class="btn btn-primary" />
+        <button onclick="mostrarTabla()" type="submit" value="Eliminar Producto"
+            class="btn btn-primary">eliminar</button>
     </div>
 </form>
 

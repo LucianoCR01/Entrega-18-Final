@@ -1,3 +1,4 @@
+
 //Codigo del FRONT
 const socket = io()
 
@@ -30,8 +31,6 @@ formProducts.onsubmit = (e) => {
 };
 
 socket.on("listProdSocke", listProdSocke => {
-    window.location.reload();
-    //socket.emit('listProdSocke', listProdSocke);
 })
 
 formeliminar.onsubmit = (e) => {
@@ -42,6 +41,27 @@ formeliminar.onsubmit = (e) => {
 };
 
 socket.on("delProdSocke", delProdSocke => {
-    window.location.reload();
-    //document.tbody.innerHTML = delProdSocke
+    //window.location.reload();
+    let tabla = document.getElementById("tabla")
+
+    function mostrarTabla() {
+        console.log("hola")
+        fetch("C:/Users/Luciano/Desktop/Entrega-3/DB/productos.json")
+            .then(data => data.json())
+            .then(data2 => {
+                console.log(data2)
+                dibujarTabla(data2)
+            })
+    }
+
+    function dibujarTabla(datos) {
+        tabla.innerHTML = ""
+        for (let valor of datos) {
+            tabla.innerHTML += `
+            <tr>
+                <th>${valor.title}</th>
+            </tr>
+            `
+        }
+    }
 })
