@@ -31,40 +31,71 @@ formProducts.onsubmit = (e) => {
 };
 
 socket.on("listProdSocke", listProdSocke => {
-})
-
-formeliminar.onsubmit = (e) => {
-    e.preventDefault();
-    console.log(inputEliminar.value)
-    socket.emit("inputEliminar", inputEliminar.value);
-    formeliminar.reset();
-};
-
-socket.on("delProdSocke", delProdSocke => {
-    //window.location.reload();
     let tabla = document.getElementById("tabla")
-    console.log(tabla)
-    document.getElementById("jsonBtn").addEventListener("click", mostrarTabla)
+    document.getElementById("btnAddProduct").addEventListener("click", mostrarTabla)
     function mostrarTabla() {
         fetch("http://localhost:8080/api/products")
             .then(function (res) {
                 return res.json()
             })
-            .then(function (data) {
-                dibujarTabla(data)
+            .then(function (datos) {
+                dibujarTabla(datos.data)
             })
     }
-
-    async function dibujarTabla(datos) {
-        console.log(datos)
+    function dibujarTabla(datos) {
         tabla.innerHTML = "";
-        for (let valor of [datos]) {
+        for (let valor of datos) {
             tabla.innerHTML += `
-            <tr>
-                <th>${valor.title}</th>
-            </tr>
+            <ul>
+                <li>Nombre : ${valor.title}</li>
+                <li>Descripcion : ${valor.description}</li>
+                <li>Precio : ${valor.price}</li>
+                <li>Code : ${valor.code}</li>
+                <li>Stock : ${valor.stock}</li>
+                <li>Categoria : ${valor.category}</li>
+                <li>Imagen : <img src="${valor.picture}" alt="${valor.title}" width="50"></li>
+                <li>ID : ${valor.id}</li>
+                <br />
+            </ul>
             `
         }
     }
+})
 
+formeliminar.onsubmit = (e) => {
+    e.preventDefault();
+    socket.emit("inputEliminar", inputEliminar.value);
+    formeliminar.reset();
+};
+
+socket.on("delProdSocke", delProdSocke => {
+    let tabla = document.getElementById("tabla")
+    document.getElementById("btnEliminar").addEventListener("click", mostrarTabla)
+    function mostrarTabla() {
+        fetch("http://localhost:8080/api/products")
+            .then(function (res) {
+                return res.json()
+            })
+            .then(function (datos) {
+                dibujarTabla(datos.data)
+            })
+    }
+    function dibujarTabla(datos) {
+        tabla.innerHTML = "";
+        for (let valor of datos) {
+            tabla.innerHTML += `
+            <ul>
+                <li>Nombre : ${valor.title}</li>
+                <li>Descripcion : ${valor.description}</li>
+                <li>Precio : ${valor.price}</li>
+                <li>Code : ${valor.code}</li>
+                <li>Stock : ${valor.stock}</li>
+                <li>Categoria : ${valor.category}</li>
+                <li>Imagen : <img src="${valor.picture}" alt="${valor.title}" width="50"></li>
+                <li>ID : ${valor.id}</li>
+                <br />
+            </ul>
+            `
+        }
+    }
 })
