@@ -19,3 +19,34 @@ import path from "path";
 import { fileURLToPath } from "url";
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
+/////////////////socket IO////////////////////
+import { Server } from "socket.io";
+import productModel from "./dao/models/products.model.js";
+
+export function connectSocket(httpServer) {
+    const socketServer = new Server(httpServer)
+    socketServer.on("connection", socket => {
+        console.log("Se abrio un Socket " + socket.id)
+        socket.on("newProduct", async newProduct => {
+            newProduct["status"] = true
+            const result = await productModel.create(newProduct)
+            socket.emit("listProdSocke", result)
+        })
+
+        socket.on("inputEliminar", async inputEliminar => {
+            const delProdSocke = await productModel.deleteOne({ _id: inputEliminar })
+            socket.emit("delProdSocke", delProdSocke)
+        })
+    })
+}
+///////////////////////Mongoose//////////////////
+import mongoose from "mongoose";
+const url = "mongodb+srv://luciano:lucianoCoder@coderbackend.mnsz0hb.mongodb.net/?retryWrites=true&w=majority"
+
+mongoose.connect(url, { dbName: "CoderHouse" })
+    .then(() => {
+        console.log("DB connected")
+    })
+    .catch(e => {
+        console.error("Error conectando a la DB")
+    })

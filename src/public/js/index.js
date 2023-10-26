@@ -1,4 +1,3 @@
-
 //Codigo del FRONT
 const socket = io()
 
