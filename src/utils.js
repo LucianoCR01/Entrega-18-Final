@@ -23,6 +23,8 @@ export const __dirname = path.dirname(__filename);
 import { Server } from "socket.io";
 import productModel from "./dao/models/products.model.js";
 
+const messages = []
+
 export function connectSocket(httpServer) {
     const socketServer = new Server(httpServer)
     socketServer.on("connection", socket => {
@@ -36,6 +38,12 @@ export function connectSocket(httpServer) {
         socket.on("inputEliminar", async inputEliminar => {
             const delProdSocke = await productModel.deleteOne({ _id: inputEliminar })
             socket.emit("delProdSocke", delProdSocke)
+        })
+
+        ////Chat////
+        socket.on("message", (data) => {
+            messages.push(data)
+            socketServer.emit("messageLogs", messages)
         })
     })
 }
