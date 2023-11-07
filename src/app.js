@@ -8,6 +8,8 @@ import { handlebarsRouter } from "./routes/handlebars.router.js";
 import { realTime } from "./routes/realTime.router.js";
 import { productsMongo } from "./routes/productsMongo.routers.js"
 import { chat } from "./routes/chat.router.js";
+import { cartsMongo } from "./routes/cartsMongo.routers.js";
+import { agregarProductos } from "./routes/agregarProductos.router.js";
 
 const app = express()
 const PORT = 8080
@@ -34,6 +36,8 @@ app.use("/api/carts", cartsRouter)
 app.use("/handlebars", handlebarsRouter)
 app.use("/realtimeproducts", realTime)
 app.use("/productsMongo", productsMongo)
+app.use("/agregarProductos", agregarProductos)
+app.use("/cartsMongo", cartsMongo)
 app.use("/chat", chat)
 
 //Atrapa todas las rutas que no existan

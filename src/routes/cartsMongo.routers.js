@@ -1,9 +1,9 @@
 import express from "express";
-import { cartsService } from "../services/mongoCarts.services.js";
+import { cartsService } from "../services/mongoCarts.services.js"
 
-export const cartsRouter = express.Router()
+export const cartsMongo = express.Router()
 
-cartsRouter.post("/", async (req, res) => {
+cartsMongo.post("/", async (req, res) => {
     try {
         return res.status(200).json({
             status: "success",
@@ -20,7 +20,7 @@ cartsRouter.post("/", async (req, res) => {
     }
 })
 
-cartsRouter.get("/:cid", async (req, res) => {
+cartsMongo.get("/:cid", async (req, res) => {
     try {
         const idCart = req.params.cid
         return res.status(200).json({
@@ -38,7 +38,7 @@ cartsRouter.get("/:cid", async (req, res) => {
     }
 })
 
-cartsRouter.post("/:cid/products/:pid", async (req, res) => {
+cartsMongo.post("/:cid/products/:pid", async (req, res) => {
     const idCart = req.params.cid
     const idProduct = req.params.pid
     try {
@@ -57,7 +57,7 @@ cartsRouter.post("/:cid/products/:pid", async (req, res) => {
     }
 })
 
-cartsRouter.delete("/:cid/products/:pid", async (req, res) => {
+cartsMongo.delete("/:cid/products/:pid", async (req, res) => {
     const { cid, pid } = req.params;
     try {
         return res.status(200).json({
@@ -76,7 +76,7 @@ cartsRouter.delete("/:cid/products/:pid", async (req, res) => {
     }
 })
 
-cartsRouter.put("/:cid", async (req, res) => {
+cartsMongo.put("/:cid", async (req, res) => {
     const { cid } = req.params
     const productos = req.body
     try {
@@ -96,7 +96,7 @@ cartsRouter.put("/:cid", async (req, res) => {
     }
 })
 
-cartsRouter.put("/:cid/products/:pid", async (req, res) => {
+cartsMongo.put("/:cid/products/:pid", async (req, res) => {
     const dataCantidad = req.body.data
     const { cid } = req.params
     const { pid } = req.params
@@ -117,7 +117,7 @@ cartsRouter.put("/:cid/products/:pid", async (req, res) => {
     }
 })
 
-cartsRouter.delete("/:cid", async (req, res) => {
+cartsMongo.delete("/:cid", async (req, res) => {
     const { cid } = req.params
     try {
         return res.status(200).json({
