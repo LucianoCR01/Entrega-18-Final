@@ -36,7 +36,7 @@ function putIntoCart(_id) {
 }
 
 if (!cartId) {
-    alert("no id");
+    alert("Ingrese el ID de su Carrito");
     const url = API_URL + "/api/carts";
     const data = { quantity: 1 };
     const options = {
