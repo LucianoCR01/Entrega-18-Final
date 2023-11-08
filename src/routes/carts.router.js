@@ -23,6 +23,7 @@ cartsRouter.post("/", async (req, res) => {
 cartsRouter.get("/:cid", async (req, res) => {
     try {
         const idCart = req.params.cid
+        res.cookie("cartId", idCart)
         return res.status(200).json({
             status: "success",
             msg: "Carrito Buscado",

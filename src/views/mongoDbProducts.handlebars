@@ -1,4 +1,17 @@
 <div>
+
+    <form id="form-Carrito">
+        <div>
+            <label for="eliminar"> ID Carrito: </label>
+            <br />
+            <input type="text" name="eliminar" id="inputCarrito" style="margin-bottom: 16px" class="form-control"
+                placeholder="ID Carrito Seleccionar" />
+        </div>
+        <div>
+            <input id="btnEliminar" type="submit" value="Seleccionar Carrito" />
+        </div>
+    </form>
+
     <h1>La lista de productos es: </h1>
     <h3>page {{products.rest.page}}</h3>
     {{#each products.productos}}
@@ -35,3 +48,4 @@
     <p>pagina anterior {{products.rest.prevPage}}</p>
     <p>pagina siguiente {{products.rest.nextPage}}</p>
 </div>
+<script src="/js/mongoProducts.index.js"></script>
