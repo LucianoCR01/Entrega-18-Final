@@ -11,8 +11,10 @@ productsMongo.get("/", async (req, res) => {
         const filtro = req.query.filtro
         const sort = req.query.sort ?? 1
 
+        const user = req.session.user
+
         const products = await productsService.getProducts(limit, page, sort, filtro)
-        res.status(200).render("mongoDbProducts", { products });
+        res.status(200).render("mongoDbProducts", { products, user });
     } catch (e) {
         console.log(e);
         return res.status(500).json({

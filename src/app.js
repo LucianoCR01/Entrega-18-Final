@@ -10,9 +10,15 @@ import { productsMongo } from "./routes/productsMongo.routers.js"
 import { chat } from "./routes/chat.router.js";
 import { cartsMongo } from "./routes/cartsMongo.routers.js";
 import { agregarProductos } from "./routes/agregarProductos.router.js";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import viewsRouter from "./routes/views.router.js";
+import sessionRouter from "./routes/session.router.js";
 
 const app = express()
 const PORT = 8080
+const mongoUrl = "mongodb+srv://luciano:lucianoCoder@coderbackend.mnsz0hb.mongodb.net/?retryWrites=true&w=majority"
+const mongoDB = "My_db_47"
 
 const httpServer = app.listen(PORT, () => {
     console.log(`APP corriendo en el http://localhost:${PORT}`)
@@ -21,6 +27,7 @@ const httpServer = app.listen(PORT, () => {
 //Front del socket
 connectSocket(httpServer)
 
+//Config para usar JSON en los POST
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
@@ -29,6 +36,18 @@ app.use(express.static(path.join(__dirname, "public")));
 app.engine("handlebars", handlebars.engine())
 app.set("view engine", "handlebars")
 app.set("views", path.join(__dirname, "views"));
+
+//conf Sessiones
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl,
+        dbName: mongoDB,
+        ttl: 100
+    }),
+    secret: "secret",
+    resave: true.valueOf,
+    saveUninitialized: true
+}))
 
 //Endpoints
 app.use("/api/products", productsRouter)
@@ -39,6 +58,8 @@ app.use("/productsMongo", productsMongo)
 app.use("/agregarProductos", agregarProductos)
 app.use("/cartsMongo", cartsMongo)
 app.use("/chat", chat)
+app.use("/", viewsRouter)
+app.use("/api/session", sessionRouter)
 
 //Atrapa todas las rutas que no existan
 app.get("*", (req, res) => {
