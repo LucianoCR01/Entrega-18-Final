@@ -14,6 +14,8 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import viewsRouter from "./routes/views.router.js";
 import sessionRouter from "./routes/session.router.js";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
 
 const app = express()
 const PORT = 8080
@@ -48,6 +50,11 @@ app.use(session({
     resave: true.valueOf,
     saveUninitialized: true
 }))
+
+///Passport////
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Endpoints
 app.use("/api/products", productsRouter)

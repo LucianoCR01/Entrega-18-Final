@@ -19,7 +19,7 @@ viewsRouter.get("/login", (req, res) => {
 
 viewsRouter.get("/singup", (req, res) => {
     if (req.session?.user) {
-        return res.redirect("/prfile")
+        return res.redirect("/profile")
     }
     res.render("singup", {})
 })
@@ -28,6 +28,10 @@ viewsRouter.get("/profile", auth, (req, res) => {
     const user = req.session.user
     res.render("profile", user)
 })
+
+viewsRouter.get("/failLogin"), (req, res) => res.send({ error: "Failed" })
+
+viewsRouter.get("/failRegister"), (req, res) => res.send({ error: "Failed" })
 
 function auth(req, res, next) {
     if (req.session?.user) return next()
