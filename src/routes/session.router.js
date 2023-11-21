@@ -41,7 +41,7 @@ sessionRouter.post("/singup", passport.authenticate("register", { failureRedirec
 //     res.redirect("/profile")
 // })
 
-sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "/failLogin" }), async (req, res) => {
+sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "/failRegister" }), async (req, res) => {
     if (!req.user) {
         return res.status(400).send({ status: "error", error: "Invalid credentials" })
     }
