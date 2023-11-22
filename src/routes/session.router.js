@@ -1,6 +1,6 @@
 import { Router } from "express";
-import UserModel from "../dao/models/user.model.js"
-import { createHash, isValidPassword } from "../utils.js";
+//import UserModel from "../dao/models/user.model.js"
+//import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
 
 const sessionRouter = Router()
@@ -22,9 +22,6 @@ const sessionRouter = Router()
 sessionRouter.post("/singup", passport.authenticate("register", { failureRedirect: "/failRegister" }), async (req, res) => {
     res.redirect("/login")
 })
-
-
-
 
 // sessionRouter.post("/login", async (req, res) => {
 //     const { email, password } = req.body
@@ -62,5 +59,19 @@ sessionRouter.get("/logout", async (req, res) => {
         res.redirect("/")
     })
 })
+
+// sessionRouter.get("/login-github", passport.authenticate("github", { scope: ["user:email"] }),
+//     async (req, res) => { }
+// )
+
+// sessionRouter.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/" }),
+//     async (req, res) => {
+//         console.log("callback: ", req.user)
+//         req.session.user = req.user
+
+//         console.log(req.session)
+//         res.redirect("/")
+//     }
+// )
 
 export default sessionRouter

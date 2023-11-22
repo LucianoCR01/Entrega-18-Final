@@ -16,6 +16,7 @@ import viewsRouter from "./routes/views.router.js";
 import sessionRouter from "./routes/session.router.js";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
+import initializePassportGitHub from "./config/passport-Github.config.js";
 
 const app = express()
 const PORT = 8080
@@ -50,6 +51,9 @@ app.use(session({
     resave: true.valueOf,
     saveUninitialized: true
 }))
+
+///PassPort con Github///
+initializePassportGitHub()
 
 ///Passport////
 initializePassport()
