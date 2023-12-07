@@ -17,11 +17,14 @@ import sessionRouter from "./routes/session.router.js";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import initializePassportGitHub from "./config/passport-Github.config.js";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app = express()
-const PORT = 8080
-const mongoUrl = "mongodb+srv://luciano:lucianoCoder@coderbackend.mnsz0hb.mongodb.net/?retryWrites=true&w=majority"
-const mongoDB = "My_db_47"
+const PORT = process.env.PORT
+const mongoUrl = process.env.mongoUrl
+const mongoDB = process.env.mongoDB
 
 const httpServer = app.listen(PORT, () => {
     console.log(`APP corriendo en el http://localhost:${PORT}`)
