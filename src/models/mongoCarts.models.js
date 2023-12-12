@@ -1,8 +1,7 @@
-
 import { CartsModel } from "../dao/models/carts.model.js";
 import productModel from "../dao/models/products.model.js";
 
-class CartsService {
+class CartsModelsMongo {
     async getProducts(cid) {
         const doc = await CartsModel.findById(cid).populate('products.product');
         if (!doc) {
@@ -75,4 +74,4 @@ class CartsService {
 
 }
 
-export const cartsService = new CartsService()
+export default CartsModelsMongo

@@ -1,136 +1,18 @@
 import express from "express";
-import { cartsService } from "../services/mongoCarts.services.js"
+import { actualizarCantidad, agregatedProduct, createCart, deleteProduct, eliminarProdCarrito, findCart, updateCarrito } from "../controllers/cartsMongo.controllers.js";
 
 export const cartsMongo = express.Router()
 
-cartsMongo.post("/", async (req, res) => {
-    try {
-        return res.status(200).json({
-            status: "success",
-            msg: "Carrito Agregado",
-            data: await cartsService.createCart()
-        })
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        });
-    }
-})
+cartsMongo.post("/", createCart)
 
-cartsMongo.get("/:cid", async (req, res) => {
-    try {
-        const idCart = req.params.cid
-        return res.status(200).json({
-            status: "success",
-            msg: "Carrito Buscado",
-            data: await cartsService.findCart(idCart)
-        })
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        });
-    }
-})
+cartsMongo.get("/:cid", findCart)
 
-cartsMongo.post("/:cid/products/:pid", async (req, res) => {
-    const idCart = req.params.cid
-    const idProduct = req.params.pid
-    try {
-        return res.status(200).json({
-            status: "success",
-            msg: "Producto Agregado",
-            data: await cartsService.agregatedProduct(idCart, idProduct)
-        })
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        });
-    }
-})
+cartsMongo.post("/:cid/products/:pid", agregatedProduct)
 
-cartsMongo.delete("/:cid/products/:pid", async (req, res) => {
-    const { cid, pid } = req.params;
-    try {
-        return res.status(200).json({
-            status: "success",
-            msg: "Producto Eliminado",
-            data: await cartsService.deleteProduct(cid, pid)
-        })
+cartsMongo.delete("/:cid/products/:pid", deleteProduct)
 
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        })
-    }
-})
+cartsMongo.put("/:cid", updateCarrito)
 
-cartsMongo.put("/:cid", async (req, res) => {
-    const { cid } = req.params
-    const productos = req.body
-    try {
-        return res.status(200).json({
-            status: "success",
-            msg: "Carrito Actualizado",
-            data: await cartsService.updateCarrito(cid, productos)
-        })
+cartsMongo.put("/:cid/products/:pid", actualizarCantidad)
 
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        })
-    }
-})
-
-cartsMongo.put("/:cid/products/:pid", async (req, res) => {
-    const dataCantidad = req.body.data
-    const { cid } = req.params
-    const { pid } = req.params
-    try {
-        return res.status(200).json({
-            status: "success",
-            msg: "Cantidad Actualizada",
-            data: await cartsService.actualizarCantidad(cid, pid, dataCantidad)
-        })
-
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        })
-    }
-})
-
-cartsMongo.delete("/:cid", async (req, res) => {
-    const { cid } = req.params
-    try {
-        return res.status(200).json({
-            status: "success",
-            msg: "Productos Borrados",
-            data: await cartsService.eliminarProdCarrito(cid)
-        })
-    } catch (e) {
-        console.log(e);
-        return res.status(500).json({
-            status: "error",
-            msg: "something went wrong :(",
-            data: {},
-        })
-    }
-})
+cartsMongo.delete("/:cid", eliminarProdCarrito)

@@ -1,7 +1,7 @@
 import fs from "fs"
 import crypto from "crypto"
 
-class ProductManager {
+class ProductModelFS {
 
     constructor(path) {
         this.path = path
@@ -85,4 +85,4 @@ class ProductManager {
     }
 }
 
-export const productos = new ProductManager("./DB/productos.json")
+export const productModelsFS = new ProductModelFS("./DB/productos.json")
