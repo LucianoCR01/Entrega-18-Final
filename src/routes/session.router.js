@@ -46,7 +46,9 @@ sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "
         first_name: req.user.first_name,
         last_name: req.user.last_name,
         email: req.user.email,
-        age: req.user.age
+        age: req.user.age,
+        isAdmin: req.user.isAdmin,
+        isUser: req.user.isUser
     }
 
     res.redirect("/productsMongo")

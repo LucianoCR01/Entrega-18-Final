@@ -46,8 +46,6 @@ viewsRouter.get("/githubcallback", passport.authenticate("github", { failureRedi
     async (req, res) => {
         console.log("callback: ", req.user)
         req.session.user = req.user
-
-        console.log(req.session)
         res.redirect("/")
     }
 )

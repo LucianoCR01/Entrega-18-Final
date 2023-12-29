@@ -10,7 +10,6 @@ export const getProductsMongo = async (req, res) => {
         const sort = req.query.sort ?? 1
 
         const user = req.session.user
-
         const products = await ProductMongo.getProducts(limit, page, sort, filtro)
         res.status(200).render("mongoDbProducts", { products, user });
     } catch (e) {
@@ -99,3 +98,4 @@ export const deleteProduct = async (req, res) => {
         });
     }
 }
+

@@ -3,8 +3,9 @@ import AgregarProdService from "../services/agregarProductos.services.js";
 const agregarProdService = new AgregarProdService()
 
 export const getProductsAGR = async (req, res) => {
+    const user = req.session.user
     const products = await agregarProdService.getProductsAGR()
-    return res.status(200).render("realTimeProducts", { products })
+    return res.status(200).render("realTimeProducts", { products, user })
 }
 
 export const findProductAGR = async (req, res) => {
@@ -15,7 +16,7 @@ export const findProductAGR = async (req, res) => {
 
 export const createProdARG = async (req, res) => {
     const data = req.body
-    const create = await agregarProdService.createProdARG(data)
+    const create = await agregarProdService.createProdARG(data, user)
     return res.send({ status: "success", payload: create })
 }
 
@@ -31,3 +32,4 @@ export const deleteOneAGR = async (req, res) => {
     const result = await agregarProdService.deleteOneAGR(ProductId)
     return res.send({ Status: "success", payload: result })
 }
+

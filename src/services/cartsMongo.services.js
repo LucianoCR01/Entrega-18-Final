@@ -1,4 +1,4 @@
-import CartsModelsMongo from "../models/mongoCarts.models.js";
+import CartsModelsMongo from "../dao/mongo/mongoCarts.models.js";
 
 class CartsMongoServices {
     constructor() {
@@ -31,6 +31,14 @@ class CartsMongoServices {
 
     eliminarProdCarrito = (cid) => {
         return this.cartsMongoServices.eliminarProdCarrito(cid)
+    }
+
+    purchase = (cid, purchaser) => {
+        let diaSemana = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+        let mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+
+        return this.cartsMongoServices.purchase(cid, purchaser, diaSemana, mes)
     }
 }
 

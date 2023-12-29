@@ -21,7 +21,7 @@ export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 /////////////////socket IO////////////////////
 import { Server } from "socket.io";
-import productModel from "./dao/models/products.model.js";
+import productModel from "./dao/mongo/models/products.model.js";
 
 const messages = []
 

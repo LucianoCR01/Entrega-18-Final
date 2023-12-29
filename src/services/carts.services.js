@@ -1,4 +1,4 @@
-import CartsModelsMongo from "../models/mongoCarts.models.js"
+import CartsModelsMongo from "../dao/mongo/mongoCarts.models.js"
 
 class MongoCartsService {
     constructor() {
@@ -6,7 +6,8 @@ class MongoCartsService {
     }
 
     createCart = () => {
-        return this.mongoCartsService.createCart()
+        const productos = []
+        return this.mongoCartsService.createCart(productos)
     }
 
     findCart = (idCart) => {

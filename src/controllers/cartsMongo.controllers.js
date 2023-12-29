@@ -133,3 +133,22 @@ export const eliminarProdCarrito = async (req, res) => {
         })
     }
 }
+
+export const purchase = async (req, res) => {
+    const { cid } = req.params
+    const purchaser = req.session.user.email
+    try {
+        return res.status(200).json({
+            status: "success",
+            msg: "Compra realizada",
+            data: await cartsMongoServices.purchase(cid, purchaser)
+        })
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            status: "error",
+            msg: "something went wrong :(",
+            data: {},
+        })
+    }
+}

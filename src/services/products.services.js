@@ -1,4 +1,5 @@
-import { productModelsFS } from "../models/product.models.js"
+import crypto from "crypto"
+import { productModelsFS } from "../dao/file/product.models.js"
 
 class ProductService {
     constructor() {
@@ -10,11 +11,22 @@ class ProductService {
     }
 
     getProductByID = (id) => {
-        return this.productModel.getProductById(id)
+        const existID = this.productModel.getProductById(id)
+        if (existID == undefined) {
+            return "not found"
+        }
+        return existID
     }
 
     addProduct = (newProduct) => {
-        return this.productModel.addProduct(newProduct)
+        let id = crypto.randomUUID()
+        let argumentos = Object.keys(newProduct).length ?? 0
+        if (argumentos < 7) {
+            return console.log("Faltan argumentos")
+        }
+        else {
+            return this.productModel.addProduct(newProduct, id)
+        }
     }
 
     productService = (idActualizar, campoActualizar, actualizacion) => {

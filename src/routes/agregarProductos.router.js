@@ -3,12 +3,18 @@ import { createProdARG, deleteOneAGR, findProductAGR, getProductsAGR, updateOne 
 
 export const agregarProductos = express.Router()
 
-agregarProductos.get("/", getProductsAGR)
+agregarProductos.get("/", auth, getProductsAGR)
 
-agregarProductos.get("/:pid", findProductAGR)
+agregarProductos.get("/:pid", auth, findProductAGR)
 
-agregarProductos.post("/", createProdARG)
+agregarProductos.post("/", auth, createProdARG)
 
-agregarProductos.put("/:pid", updateOne)
+agregarProductos.put("/:pid", auth, updateOne)
 
-agregarProductos.delete("/:pid", deleteOneAGR)
+agregarProductos.delete("/:pid", auth, deleteOneAGR)
+
+function auth(req, res, next) {
+    const user = req.session.user ?? false
+    if (user.isAdmin) return next()
+    res.redirect("/")
+}

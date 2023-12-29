@@ -1,6 +1,6 @@
 import passport from "passport";
 import local from "passport-local"
-import UserModel from "../dao/models/user.model.js";
+import UserModel from "../dao/mongo/models/user.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 
 const LacolStratey = local.Strategy
@@ -18,7 +18,7 @@ const initializePassport = () => {
                 return done(null, false)
             }
             const newUser = {
-                firs_name, last_name, email, age, password: createHash(password)
+                firs_name, last_name, email, age, isUser: true, password: createHash(password)
             }
             const result = await UserModel.create(newUser)
             return done(null, result)

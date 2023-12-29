@@ -1,7 +1,7 @@
 <div id="tabla">
     <h1>La lista de productos es: </h1>
     <tbody>
-        {{#each arrayProd}}
+        {{#each products}}
         <ul>
             <li>Nombre : {{this.title}}</li>
             <li>Descripcion : {{this.description}}</li>
@@ -15,6 +15,7 @@
         {{/each}}
     </tbody>
 </div>
+{{#if user.isAdmin}}
 <form id="form-products" style="margin: auto">
 
     <div>
@@ -82,6 +83,6 @@
         <input id="btnEliminar" type="submit" value="Eliminar Producto" class="btn btn-primary" />
     </div>
 </form>
-
+{{/if}}
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

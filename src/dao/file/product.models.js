@@ -1,5 +1,5 @@
 import fs from "fs"
-import crypto from "crypto"
+
 
 class ProductModelFS {
 
@@ -20,22 +20,15 @@ class ProductModelFS {
         return JSON.parse(readProducts)
     }
 
-    addProduct(newProduct) {
-        let id = crypto.randomUUID()
-        let argumentos = Object.keys(newProduct).length ?? 0
-        if (argumentos < 7) {
-            return console.log("Faltan argumentos")
-        }
-        else {
-            if (this.products.find((e) => e.code == newProduct["code"])) {
-                return console.log("el code esta repetido")
-            } else {
-                newProduct.id = id
-                this.products.push(
-                    newProduct
-                );
-                this.#writeFile(this.products, null, 2)
-            }
+    addProduct(newProduct, id) {
+        if (this.products.find((e) => e.code == newProduct["code"])) {
+            return console.log("el code esta repetido")
+        } else {
+            newProduct.id = id
+            this.products.push(
+                newProduct
+            );
+            this.#writeFile(this.products, null, 2)
         }
     }
 
@@ -50,9 +43,6 @@ class ProductModelFS {
     async getProductById(id) {
         let productsList = await this.getProducts()
         let existID = productsList.find(e => e.id === id)
-        if (existID == undefined) {
-            return "not found"
-        }
         return existID
     }
 
@@ -69,7 +59,7 @@ class ProductModelFS {
         } else if (campoActualizar == "id") {
             console.log("no se puede cambiar el ID")
         } else {
-            console.log("no soy un campo")
+            console.log("error faltan campos o te equivocaste de campo")
         }
     }
 

@@ -11,7 +11,7 @@
 {{/if}}
 
 <div>
-
+    {{#if user.isUser}}
     <form id="form-Carrito">
         <div>
             <label for="eliminar"> ID Carrito: </label>
@@ -23,7 +23,7 @@
             <input id="btnEliminar" type="submit" value="Seleccionar Carrito" />
         </div>
     </form>
-
+    {{/if}}
     <h1>La lista de productos es: </h1>
     <h3>page {{products.rest.page}}</h3>
     {{#each products.productos}}

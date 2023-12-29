@@ -1,9 +1,9 @@
 <h1>Bienvenidos al coderChat</h1>
 <div>
+    {{#if user.isUser}}
     <input type="text" id="chatBox">
-</div>
-<div>
     <p id="messageLogs"></p>
+    {{/if}}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

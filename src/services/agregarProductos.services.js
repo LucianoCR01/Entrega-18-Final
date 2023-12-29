@@ -1,4 +1,4 @@
-import AgregarProdModels from "../models/agregarProductos.models.js";
+import AgregarProdModels from "../dao/mongo/agregarProductos.models.js";
 
 class AgregarProdService {
     constructor() {

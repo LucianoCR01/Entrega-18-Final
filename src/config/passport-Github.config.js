@@ -1,6 +1,6 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2"
-import UserModel from "../dao/models/user.model.js";
+import UserModel from "../dao/mongo/models/user.model.js";
 
 const initializePassportGitHub = () => {
 

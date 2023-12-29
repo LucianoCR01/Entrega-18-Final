@@ -1,4 +1,4 @@
-import { productModelsFS } from "../models/product.models.js";
+import { productModelsFS } from "../dao/file/product.models.js";
 
 class HandlebarServices {
     constructor() {

@@ -1,5 +1,7 @@
-import { CartsModel } from "../dao/models/carts.model.js";
-import productModel from "../dao/models/products.model.js";
+import { CartsModel } from "./models/carts.model.js";
+import productModel from "./models/products.model.js";
+import ticketModel from "./models/ticket.model.js";
+import crypto from "crypto"
 
 class CartsModelsMongo {
     async getProducts(cid) {
@@ -10,8 +12,7 @@ class CartsModelsMongo {
         return doc;
     }
 
-    async createCart() {
-        const productos = []
+    async createCart(productos) {
         const cartCreated = await CartsModel.create({ productos })
         return cartCreated
     }
@@ -72,6 +73,36 @@ class CartsModelsMongo {
         await doc.save()
     }
 
+    async purchase(cid, purchaser, diaSemana, mes) {
+        const findCart = await CartsModel.findOne({ _id: cid })
+        const prodCart = findCart.productos
+
+        let amount = 0
+        const prodSinStock = []
+        prodCart.forEach(async element => {
+            let checkStock = element.product.stock - element.quantity
+            if (checkStock < 0) {
+                let _id = element.product._id
+                let idLimpio = _id._id.toString().replace(/ObjectId\("(.*)"\)/, "$1")
+                prodSinStock.push(idLimpio)
+            } else {
+                amount = amount + element.quantity * element.product.price
+                const idProd = element.product._id
+                const product = await productModel.findOne({ _id: idProd })
+                product.stock = product.stock - element.quantity
+                this.deleteProduct(cid, idProd)
+                await product.save()
+            }
+        });
+        let fecha = new Date()
+        let code = crypto.randomUUID()
+        let purchase_datetime = `${diaSemana[fecha.getDay()]}, ${fecha.getDate()} de ${mes[fecha.getMonth()]} de ${fecha.getFullYear()} a las ${fecha.toLocaleTimeString()}`
+        let data = { code, purchase_datetime, amount, purchaser }
+        const ticket = await ticketModel.create(data)
+        const dataCliente = `Su ticket de compra es ${JSON.stringify(data)} y los productos sin Stock son ${prodSinStock}`
+
+        return dataCliente
+    }
 }
 
 export default CartsModelsMongo

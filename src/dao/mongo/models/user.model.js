@@ -5,7 +5,9 @@ const UserModel = mongoose.model("user", new mongoose.Schema({
     last_name: String,
     email: String,
     age: Number,
-    password: String
+    password: String,
+    isUser: Boolean,
+    isAdmin: Boolean,
 }))
 
 export default UserModel
