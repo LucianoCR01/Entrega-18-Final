@@ -18,6 +18,7 @@ import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import initializePassportGitHub from "./config/passport-Github.config.js";
 import dotenv from "dotenv"
+import { mokingProducts } from "./routes/mokingProducts.router.js";
 
 dotenv.config()
 
@@ -74,6 +75,7 @@ app.use("/cartsMongo", cartsMongo)
 app.use("/chat", chat)
 app.use("/", viewsRouter)
 app.use("/api/session", sessionRouter)
+app.use("/mockingproducts", mokingProducts)
 
 //Atrapa todas las rutas que no existan
 app.get("*", (req, res) => {

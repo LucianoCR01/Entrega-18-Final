@@ -65,3 +65,19 @@ import bcrypt from "bcrypt"
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 
 export const isValidPassword = (user, password) => bcrypt.compareSync(password, user.password)
+
+////////////////////Moking//////////////////
+import { faker } from "@faker-js/faker";
+
+export const generateProducts = () => {
+
+    return {
+        title: faker.commerce.productName(),
+        description: faker.commerce.productDescription(),
+        price: faker.commerce.price(),
+        code: faker.number.int(),
+        stock: faker.number.int(),
+        category: faker.commerce.productMaterial(),
+        picture: faker.image.urlPicsumPhotos()
+    }
+}
