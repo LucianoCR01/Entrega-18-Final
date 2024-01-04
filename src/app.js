@@ -19,6 +19,8 @@ import initializePassport from "./config/passport.config.js";
 import initializePassportGitHub from "./config/passport-Github.config.js";
 import dotenv from "dotenv"
 import { mokingProducts } from "./routes/mokingProducts.router.js";
+import { addLogger } from "./logger/loggers.js";
+import { loggerTest } from "./routes/test.router.js";
 
 dotenv.config()
 
@@ -26,6 +28,7 @@ const app = express()
 const PORT = process.env.PORT
 const mongoUrl = process.env.mongoUrl
 const mongoDB = process.env.mongoDB
+
 
 const httpServer = app.listen(PORT, () => {
     console.log(`APP corriendo en el http://localhost:${PORT}`)
@@ -56,6 +59,8 @@ app.use(session({
     saveUninitialized: true
 }))
 
+app.use(addLogger)
+
 ///PassPort con Github///
 initializePassportGitHub()
 
@@ -76,6 +81,7 @@ app.use("/chat", chat)
 app.use("/", viewsRouter)
 app.use("/api/session", sessionRouter)
 app.use("/mockingproducts", mokingProducts)
+app.use("/loggerTest", loggerTest)
 
 //Atrapa todas las rutas que no existan
 app.get("*", (req, res) => {
