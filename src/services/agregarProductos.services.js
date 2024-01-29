@@ -13,8 +13,8 @@ class AgregarProdService {
         return this.AgregarProdService.findProductAGR(idParam)
     }
 
-    createProdARG = (data) => {
-        return this.AgregarProdService.createProdARG(data)
+    createProdARG = (newProduct) => {
+        return this.AgregarProdService.createProdARG(newProduct)
     }
 
     updateOneAGR = (ProductId, dataProduct) => {

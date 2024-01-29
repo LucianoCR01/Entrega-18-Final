@@ -6,9 +6,12 @@
     </ul>
 </div>
 
-<form action="/api/session/login" method="post">
-    Email: <input type="email" name="email"><br>
+<form action="/api/session/login" method="post" id="form-login">
+    Email: <input type="email" name="email" id="inputLogin"><br>
     Password: <input type="text" name="password">
 
     <button type="submit">Login</button>
 </form>
+
+<p><a href="http://localhost:8080/forget-password">Olvidaste tu password</a></p>
+<script src="/js/login.index.js"></script>

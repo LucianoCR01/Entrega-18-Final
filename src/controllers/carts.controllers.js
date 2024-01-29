@@ -39,13 +39,15 @@ export const findCart = async (req, res) => {
 }
 
 export const agregatedProduct = async (req, res) => {
+
     const idCart = req.params.cid
     const idProduct = req.params.pid
+    const userInfo = req.session.user
     try {
         return res.status(200).json({
             status: "success",
             msg: "Producto Agregado",
-            data: await mongoCartsService.agregatedProduct(idCart, idProduct)
+            data: await mongoCartsService.agregatedProduct(idCart, idProduct, userInfo)
         })
     } catch (e) {
         console.log(e);

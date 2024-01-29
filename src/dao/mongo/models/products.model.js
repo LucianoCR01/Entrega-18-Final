@@ -9,7 +9,8 @@ const productSchema = new Schema({
     status: { type: Boolean, required: true },
     stock: { type: Number, required: true },
     category: { type: String, required: true, max: 100 },
-    picture: { type: String, required: true, max: 100 }
+    picture: { type: String, required: true, max: 100 },
+    owner: { type: String, default: "admin" }
 });
 
 productSchema.plugin(mongoosePaginate)

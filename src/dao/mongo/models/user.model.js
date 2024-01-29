@@ -6,8 +6,9 @@ const UserModel = mongoose.model("user", new mongoose.Schema({
     email: String,
     age: Number,
     password: String,
-    isUser: Boolean,
-    isAdmin: Boolean,
+    isUser: { type: Boolean, default: true },
+    isAdmin: { type: Boolean, default: false },
+    premium: { type: Boolean, default: false }
 }))
 
 export default UserModel

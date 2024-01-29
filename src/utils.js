@@ -20,10 +20,14 @@ import { fileURLToPath } from "url";
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 /////////////////socket IO////////////////////
+import AgregarProdService from "./services/agregarProductos.services.js";
 import { Server } from "socket.io";
 import productModel from "./dao/mongo/models/products.model.js";
+import UserModel from "./dao/mongo/models/user.model.js";
 
 const messages = []
+
+const agregarProdService = new AgregarProdService()
 
 export function connectSocket(httpServer) {
     const socketServer = new Server(httpServer)
@@ -31,13 +35,19 @@ export function connectSocket(httpServer) {
         console.log("Se abrio un Socket " + socket.id)
         socket.on("newProduct", async newProduct => {
             newProduct["status"] = true
-            const result = await productModel.create(newProduct)
+            const result = await agregarProdService.createProdARG(newProduct)
             socket.emit("listProdSocke", result)
         })
 
-        socket.on("inputEliminar", async inputEliminar => {
-            const delProdSocke = await productModel.deleteOne({ _id: inputEliminar })
-            socket.emit("delProdSocke", delProdSocke)
+        socket.on("inputEliminar", async prodEliminar => {
+            const findProd = await productModel.findById({ _id: prodEliminar.id_Eliminar })
+            const findUser = await UserModel.findOne({ email: prodEliminar.userMail })
+            if (findUser.isAdmin || findProd.owner == findUser.email) {
+                const delProdSocke = await productModel.deleteOne({ _id: prodEliminar.id_Eliminar })
+                socket.emit("delProdSocke", delProdSocke)
+            } else {
+                console.log("No puedes eliminar un producto que no es tuyo")
+            }
         })
 
         ////Chat////
@@ -81,3 +91,14 @@ export const generateProducts = () => {
         picture: faker.image.urlPicsumPhotos()
     }
 }
+
+//////////////// Genera una cadena de caracteres aleatoria/////////////////////////
+export const generateRandomString = (num) => {
+    return [...Array(num)].map(() => {
+        const randomNum = ~~(Math.random() * 36)
+        return randomNum.toString(36)
+    })
+        .join("")
+        .toUpperCase()
+}
+

@@ -13,6 +13,8 @@ const inputThumbnail = document.getElementById("form-thumbnail");
 const formeliminar = document.getElementById("form-eliminar");
 const inputEliminar = document.getElementById("inputEliminar")
 
+let userMail = localStorage.getItem("userMail")
+
 formProducts.onsubmit = (e) => {
     e.preventDefault();
     const newProduct = {
@@ -23,7 +25,10 @@ formProducts.onsubmit = (e) => {
         code: inputCode.value,
         stock: +inputStock.value,
         category: inputCategory.value,
+        owner: userMail
     };
+
+
 
     socket.emit("newProduct", newProduct);
     formProducts.reset();
@@ -61,13 +66,18 @@ socket.on("listProdSocke", listProdSocke => {
     }
 })
 
+
 formeliminar.onsubmit = (e) => {
     e.preventDefault();
-    socket.emit("inputEliminar", inputEliminar.value);
+    const prodEliminar = {
+        id_Eliminar: inputEliminar.value,
+        userMail: userMail
+    }
+    socket.emit("inputEliminar", prodEliminar);
     formeliminar.reset();
 };
 
-socket.on("delProdSocke", delProdSocke => {
+socket.on("delProdSocke", findProd => {
     let tabla = document.getElementById("tabla")
     document.getElementById("btnEliminar").addEventListener("click", mostrarTabla)
     function mostrarTabla() {

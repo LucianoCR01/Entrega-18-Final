@@ -22,10 +22,29 @@ class CartsModelsMongo {
         return findCart
     }
 
-    async agregatedProduct(idCart, idProduct) {
+    async agregatedProduct(idCart, idProduct, userInfo) {
+        const doc = await CartsModel.findById({ _id: idCart })
+        const product = await productModel.findById({ _id: idProduct })
+        if (userInfo.premium) {
+            if (product.owner == userInfo.mail) {
+                throw new Error("Este producto te pertenece, no lo puedes agregar")
+            } else {
+                try {
+                    if (!doc) {
+                        throw new Error('Carrito no encontrado');
+                    }
+                    if (!product) {
+                        throw new Error('Producto no encontrado');
+                    }
+                    doc.productos.push({ product: product._id, quantity: 1 })
+                    await doc.save()
+                    return doc
+                } catch (error) {
+                    throw error;
+                }
+            }
+        }
         try {
-            const doc = await CartsModel.findById({ _id: idCart })
-            const product = await productModel.findById({ _id: idProduct })
             if (!doc) {
                 throw new Error('Carrito no encontrado');
             }

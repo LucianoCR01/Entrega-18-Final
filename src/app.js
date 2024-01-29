@@ -21,6 +21,8 @@ import dotenv from "dotenv"
 import { mokingProducts } from "./routes/mokingProducts.router.js";
 import { addLogger } from "./logger/loggers.js";
 import { loggerTest } from "./routes/test.router.js";
+import { nodeMailer } from "./routes/nodeMailer.js";
+import { userRol } from "./routes/userRol.router.js";
 
 dotenv.config()
 
@@ -70,6 +72,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 //Endpoints
+app.use("/api/users/premium", userRol)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/handlebars", handlebarsRouter)
@@ -82,6 +85,7 @@ app.use("/", viewsRouter)
 app.use("/api/session", sessionRouter)
 app.use("/mockingproducts", mokingProducts)
 app.use("/loggerTest", loggerTest)
+app.use("/forget-password", nodeMailer)
 
 //Atrapa todas las rutas que no existan
 app.get("*", (req, res) => {

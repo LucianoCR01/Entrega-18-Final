@@ -12,8 +12,8 @@ class AgregarProdModels {
         return product
     }
 
-    async createProdARG(data) {
-        const result = await productModel.create(data)
+    async createProdARG(newProduct) {
+        const result = await productModel.create(newProduct)
         return result
     }
 

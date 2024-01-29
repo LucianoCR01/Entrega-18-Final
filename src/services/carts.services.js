@@ -14,8 +14,8 @@ class MongoCartsService {
         return this.mongoCartsService.findCart(idCart)
     }
 
-    agregatedProduct = (idCart, idProduct) => {
-        return this.mongoCartsService.agregatedProduct(idCart, idProduct)
+    agregatedProduct = (idCart, idProduct, userInfo) => {
+        return this.mongoCartsService.agregatedProduct(idCart, idProduct, userInfo)
     }
 
     deleteProduct = (cid, pid) => {

@@ -3,24 +3,38 @@
 <p>Email: {{user.email}}</p>
 {{#if user.isAdmin}}
 <p>Role: Admin</p>
-{{else}}
-<p>Role: User</p>
+{{/if}}
+{{#if user.isUser}}
+<p>Role: Usuario</p>
+{{/if}}
+{{#if user.premium}}
+<p>Role: Premium</p>
 {{/if}}
 {{else}}
 <p>Please log in to view the products.</p>
 {{/if}}
-
 <div>
     {{#if user.isUser}}
     <form id="form-Carrito">
         <div>
-            <label for="eliminar"> ID Carrito: </label>
+            <label> ID Carrito: </label>
             <br />
-            <input type="text" name="eliminar" id="inputCarrito" style="margin-bottom: 16px" class="form-control"
-                placeholder="ID Carrito Seleccionar" />
+            <input type="text" id="inputCarrito" style="margin-bottom: 16px" placeholder="ID Carrito Seleccionar" />
         </div>
         <div>
-            <input id="btnEliminar" type="submit" value="Seleccionar Carrito" />
+            <input type="submit" value="Seleccionar Carrito" />
+        </div>
+    </form>
+    {{/if}}
+    {{#if user.premium}}
+    <form id="form-Carrito">
+        <div>
+            <label> ID Carrito: </label>
+            <br />
+            <input type="text" id="inputCarrito" style="margin-bottom: 16px" placeholder="ID Carrito Seleccionar" />
+        </div>
+        <div>
+            <input type="submit" value="Seleccionar Carrito" />
         </div>
     </form>
     {{/if}}
@@ -35,6 +49,7 @@
         <li>Stock : {{this.stock}}</li>
         <li>Categoria : {{this.category}}</li>
         <li>Imagen : {{this.picture}}</li>
+        <li>Owner : {{this.owner}}</li>
         <a href="/productsMongo/{{this._id}}">View details of {{this._id}}</a>
         <br>
         <button onclick="putIntoCart('{{this._id}}')">Add to cart {{this._id}}</button>

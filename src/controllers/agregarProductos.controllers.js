@@ -15,8 +15,9 @@ export const findProductAGR = async (req, res) => {
 }
 
 export const createProdARG = async (req, res) => {
-    const data = req.body
-    const create = await agregarProdService.createProdARG(data, user)
+    const userEmail = req.session.user.email ?? "admin"
+    newProduct.push(userEmail)
+    const create = await agregarProdService.createProdARG(newProduct)
     return res.send({ status: "success", payload: create })
 }
 
