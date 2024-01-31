@@ -24,6 +24,7 @@ import { loggerTest } from "./routes/test.router.js";
 import { nodeMailer } from "./routes/nodeMailer.js";
 import { userRol } from "./routes/userRol.router.js";
 
+
 dotenv.config()
 
 const app = express()
@@ -71,7 +72,25 @@ initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express"
+
+////Swager conf////
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Documentacion ecommers",
+            description: "Este proyecto es del curso de BackEnd en CoderHouse por el alumno Luciano Crucci"
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+
 //Endpoints
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 app.use("/api/users/premium", userRol)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)

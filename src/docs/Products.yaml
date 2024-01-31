@@ -1,0 +1,175 @@
+paths:
+  /productsMongo:
+    get:
+      summary: Obtiene los productos y genera la paginacion
+      tags: 
+        - Products y paginacion
+      responses:
+        "200":
+          description:  Los productos fueron devueltos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":  
+          description:  Error interno del server
+      
+    post:
+      summary: Crea un producto obteniendo los datos del Body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                code:
+                  type: number
+                price:
+                  type: number
+                status: 
+                  type: boolean
+                Stock:
+                  type: number
+                category: 
+                  type: string
+                picture:
+                  type: string 
+      tags: 
+      - Crear Productos
+      responses:
+        "200":
+          description:  El producto se creo con exito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":  
+          description:  Error interno del server
+
+  /productsMongo/{pid}:
+    get:
+      summary: Se le otorga un ID del producto por parametros y te devuelve el producto buscado
+      parameters:
+        - in: path
+          name: pid
+          schema:
+            type: ObjectID
+          required: true
+      tags: 
+      - Buscar Producto
+      responses:
+        "201":
+          description:  El producto se busco con exito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":  
+          description:  Error interno del server      
+          
+  /productsMongo/{id}:
+    put:
+      summary: Se le otorga un ID del producto por parametros y los campos a actualizar del producto se envian por el body
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: ObjectID
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                code:
+                  type: number
+                price:
+                  type: number
+                status: 
+                  type: boolean
+                Stock:
+                  type: number
+                category: 
+                  type: string
+                picture:
+                  type: string 
+      tags: 
+      - Actualiza un producto
+      responses:
+        "201":
+          description:  El producto se actualizo con exito
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Products"
+        "500":  
+          description:  Error interno del server    
+
+    delete:
+      summary: Se le otorga un ID del producto por parametros y lo elimina
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: ObjectID
+          required: true
+      tags: 
+        - Elimina Producto
+      responses:
+        "201":
+          description:  El producto se elimino con exito
+        "500":  
+          description:  Error interno del server 
+
+components:
+  schemas:
+    Products: 
+      type: object
+      properties:
+        title:
+          type: string
+          description: Titulo del producto
+        description:
+          type: string
+          description: Caracteristicas de los productos
+        code:
+          type: number
+          description: Codigo unico de cada producto
+        price:
+          type: number
+          description: El precio de los productos
+        status: 
+          type: boolean
+          description: Desmuestra si se puede comprar o no
+        Stock:
+          type: number
+          description: Cantidad disponible de cada producto
+        category: 
+          type: string
+          description: A que categoria pertenece el producto
+        picture:
+          type: string 
+          description: ruta de la foto del producto
+        owner: 
+          type: string
+          description: Email de quien creo el producto
+

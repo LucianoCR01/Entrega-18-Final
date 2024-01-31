@@ -1,0 +1,349 @@
+paths:
+  /cartsMongo:
+    post:
+      summary: Crea un carrito
+      tags: 
+        - Nuevo Carrito
+      responses:
+        "200":
+          description:  Carrito Agregado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":  
+          description:  Error interno del server
+  
+  /cartsMongo/{cid}:
+    get:
+      summary: Se le otorga un ID del carrito por parametros y te devuelve el carrito buscado
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: ObjectID
+          required: true
+      tags: 
+      - Buscar Carrito
+      responses:
+        "201":
+          description:  Carrito Buscado
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":  
+          description:  Error interno del server
+
+    put:
+      summary: Busca el carrito a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product:
+                        type: string
+                        format: uuid
+                        description: ID del producto
+                        example: "5f86c27e772e510015c804cb"
+                      quantity:
+                        type: number
+                        description: Cantidad del producto en el carrito
+                        example: 2
+              required:
+                - productos
+
+      tags: 
+      - Actualiza un carrito atraves del body
+      responses:
+        "201":
+          description:  El carrito se actualizo con exito
+        "500":  
+          description:  Error interno del server
+
+    delete:
+      summary: Se le otorga un ID del carrito por parametros y lo elimina
+      parameters:
+        - in: path
+          name: cid
+          schema:
+            type: ObjectID
+          required: true
+      tags: 
+        - Elimina Carrito
+      responses:
+        "201":
+          description:  El carrito se elimino con exito
+        "500":  
+          description:  Error interno del server 
+
+  /cartsMongo/{:cid}/products/{:pid}:
+    post:
+      summary: Agregar producto especifico al carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cb"
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cc"
+      responses:
+        '200':
+          description: Producto agregado exitosamente al carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  msg:
+                    type: string
+                    example: "Producto Agregado"
+                  data:
+                    type: object                   
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  msg:
+                    type: string
+                    example: "something went wrong :("
+                  data:
+                    type: object
+      tags: 
+        - agregar producto al carrito
+    
+    delete:
+      summary: Borra producto especifico del carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cb"
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cc"
+      responses:
+        '200':
+          description: Producto borrado exitosamente al carrito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  msg:
+                    type: string
+                    example: "Producto Borrado"
+                  data:
+                    type: object                   
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  msg:
+                    type: string
+                    example: "something went wrong :("
+                  data:
+                    type: object
+      tags: 
+        - Borrar producto del carrito
+
+    put:
+      summary: Actualizar cantidad de producto en el carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cb"
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cc"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+              required:
+                - data
+      responses:
+        '200':
+          description: Cantidad actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  msg:
+                    type: string
+                    example: "Cantidad Actualizada"
+                  data:
+                    type: object
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  msg:
+                    type: string
+                    example: "something went wrong :("
+                  data:
+                    type: object
+      tags: 
+        - Actualiza la catidad de un producto del carrito atraves del body 
+
+  /cartsMongo/{cid}/purchase:
+    get:
+      summary: Realizar compra
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+          example: "5f86c27e772e510015c804cb"
+      requestBody:
+        required: false
+      responses:
+        '200':
+          description: Compra realizada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  msg:
+                    type: string
+                    example: "Compra realizada"
+                  data:
+                    type: object
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "error"
+                  msg:
+                    type: string
+                    example: "something went wrong :("
+                  data:
+                    type: object
+      tags: 
+        - Finalizar compra
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        productos:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                format: uuid
+                description: ID del producto
+                example: "5f86c27e772e510015c804cb"
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito
+                axample: 2
+
+    Ticket:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Código único del ticket
+          example: "ABC123"
+        purchase_datetime:
+          type: string
+          description: Fecha y hora de la compra
+          example: "2024-01-22T12:34:56Z"
+        amount:
+          type: number
+          description: Monto del ticket
+          example: 50.00
+        purchaser:
+          type: string
+          description: Comprador del ticket
+          example: "usuario@ejemplo.com"
+        required:
+          - code
+          - purchase_datetime
+          - amount
+          - purchaser
+              
+      
