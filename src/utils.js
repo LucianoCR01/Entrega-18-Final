@@ -84,7 +84,8 @@ export const generateProducts = () => {
     return {
         title: faker.commerce.productName(),
         description: faker.commerce.productDescription(),
-        price: faker.commerce.price(),
+        price: faker.number.int(),
+        status: faker.datatype.boolean(),
         code: faker.number.int(),
         stock: faker.number.int(),
         category: faker.commerce.productMaterial(),

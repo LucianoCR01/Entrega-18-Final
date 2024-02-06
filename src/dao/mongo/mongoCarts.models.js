@@ -25,25 +25,29 @@ class CartsModelsMongo {
     async agregatedProduct(idCart, idProduct, userInfo) {
         const doc = await CartsModel.findById({ _id: idCart })
         const product = await productModel.findById({ _id: idProduct })
-        if (userInfo.premium) {
+
+        const isPremiumUser = userInfo && userInfo.premium;
+        if (isPremiumUser) {
             if (product.owner == userInfo.mail) {
                 throw new Error("Este producto te pertenece, no lo puedes agregar")
-            } else {
-                try {
-                    if (!doc) {
-                        throw new Error('Carrito no encontrado');
-                    }
-                    if (!product) {
-                        throw new Error('Producto no encontrado');
-                    }
-                    doc.productos.push({ product: product._id, quantity: 1 })
-                    await doc.save()
-                    return doc
-                } catch (error) {
-                    throw error;
-                }
             }
+
+            try {
+                if (!doc) {
+                    throw new Error('Carrito no encontrado');
+                }
+                if (!product) {
+                    throw new Error('Producto no encontrado');
+                }
+                doc.productos.push({ product: product._id, quantity: 1 })
+                await doc.save()
+                return doc
+            } catch (error) {
+                throw error;
+            }
+
         }
+
         try {
             if (!doc) {
                 throw new Error('Carrito no encontrado');
@@ -92,7 +96,7 @@ class CartsModelsMongo {
         await doc.save()
     }
 
-    async purchase(cid, purchaser, diaSemana, mes) {
+    async purchase(cid, userMail, diaSemana, mes) {
         const findCart = await CartsModel.findOne({ _id: cid })
         const prodCart = findCart.productos
 
@@ -116,7 +120,7 @@ class CartsModelsMongo {
         let fecha = new Date()
         let code = crypto.randomUUID()
         let purchase_datetime = `${diaSemana[fecha.getDay()]}, ${fecha.getDate()} de ${mes[fecha.getMonth()]} de ${fecha.getFullYear()} a las ${fecha.toLocaleTimeString()}`
-        let data = { code, purchase_datetime, amount, purchaser }
+        let data = { code, purchase_datetime, amount, userMail }
         const ticket = await ticketModel.create(data)
         const dataCliente = `Su ticket de compra es ${JSON.stringify(data)} y los productos sin Stock son ${prodSinStock}`
 

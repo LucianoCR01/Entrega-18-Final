@@ -1,8 +1,7 @@
-import chai from "chai"
+import { expect } from "chai"
 import supertest from "supertest"
 
-const expect = chai.expect
-const requester = supertest("http://127.0.0.1:8080")
+const requester = supertest("http://localhost:8080")
 
 describe("testing ecommers", () => {
     describe("test product", () => {
@@ -17,11 +16,47 @@ describe("testing ecommers", () => {
                 category: "verdura",
                 picture: "http://localhost:8080/frutas-y-verduras.jpg"
             }
-            const reponse = (await requester.post("/productsMongo")).setEncoding(productMock)
-            const { status, ok, _body } = reponse
+            const result = await requester.post("/productsMongo")
+                .field("title", productMock.title)
+                .field("description", productMock.description)
+                .field("code", productMock.code)
+                .field("price", productMock.price)
+                .field("status", productMock.status)
+                .field("stock", productMock.stock)
+                .field("category", productMock.category)
+                .field("picture", productMock.picture)
+            expect(result.status).to.be.eql(201)
+            expect(result._body.payload).to.have.property("_id")
+            expect(result._body.payload.image).to.be.ok
+        })
+    })
 
-            console.log(status, ok, _body)
-            expect(true).to.be(true)
+
+
+    describe("Registro, Login & Current", () => {
+        it("Debe registrar usuario", async () => {
+            const mockUser = {
+                first_name: "Sergio",
+                lastname: "Murua",
+                email: "sergio@hotmail.com",
+                password: 123456
+            }
+
+            const { _body } = await requester.get("/api/session/singup").send(mockUser)
+            expect(_body.payload).to.be.ok
+        })
+
+        it("En endpoint GET /login logea ", async () => {
+            const dataUser = {
+                email: "rafa@gmail.com",
+                password: "123456"
+            }
+            const result = await requester.get("/login")
+                .field("email", dataUser.email)
+                .field("password", dataUser.password)
+            expect(result.status).to.be.eql(200)
+            expect(result._body.payload).to.have.property("_id")
+            expect(result._body.payload.image).to.be.ok
         })
     })
 })

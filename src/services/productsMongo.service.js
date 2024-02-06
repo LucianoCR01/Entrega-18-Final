@@ -5,12 +5,7 @@ class ProductMongoService {
         this.ProductMongoService = new ProductsService()
     }
 
-    getProducts = (limit, page, sort, filtro) => {
-        const options = {
-            limit: limit,
-            page: page,
-            sort: { price: sort }
-        }
+    getProducts = (options, filtro) => {
         let filter = {}
 
         if (filtro == "si") {

@@ -9,8 +9,14 @@ export const getProductsMongo = async (req, res) => {
         const filtro = req.query.filtro
         const sort = req.query.sort ?? 1
 
+        const options = {
+            limit: limit,
+            page: page,
+            sort: { price: sort }
+        }
+
         const user = req.session.user
-        const products = await ProductMongo.getProducts(limit, page, sort, filtro)
+        const products = await ProductMongo.getProducts(options, filtro)
         res.status(200).render("mongoDbProducts", { products, user });
     } catch (e) {
         console.log(e);

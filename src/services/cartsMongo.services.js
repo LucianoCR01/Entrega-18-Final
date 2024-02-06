@@ -33,12 +33,12 @@ class CartsMongoServices {
         return this.cartsMongoServices.eliminarProdCarrito(cid)
     }
 
-    purchase = (cid, purchaser) => {
+    purchase = (cid, userMail) => {
         let diaSemana = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
         let mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 
 
-        return this.cartsMongoServices.purchase(cid, purchaser, diaSemana, mes)
+        return this.cartsMongoServices.purchase(cid, userMail, diaSemana, mes)
     }
 }
 
