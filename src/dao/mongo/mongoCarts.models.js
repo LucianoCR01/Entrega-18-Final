@@ -1,3 +1,4 @@
+import { dateTime } from "../../utils.js";
 import { CartsModel } from "./models/carts.model.js";
 import productModel from "./models/products.model.js";
 import ticketModel from "./models/ticket.model.js";
@@ -96,7 +97,7 @@ class CartsModelsMongo {
         await doc.save()
     }
 
-    async purchase(cid, userMail, diaSemana, mes) {
+    async purchase(cid, userMail) {
         const findCart = await CartsModel.findOne({ _id: cid })
         const prodCart = findCart.productos
 
@@ -117,9 +118,8 @@ class CartsModelsMongo {
                 await product.save()
             }
         });
-        let fecha = new Date()
         let code = crypto.randomUUID()
-        let purchase_datetime = `${diaSemana[fecha.getDay()]}, ${fecha.getDate()} de ${mes[fecha.getMonth()]} de ${fecha.getFullYear()} a las ${fecha.toLocaleTimeString()}`
+        let purchase_datetime = dateTime()
         let data = { code, purchase_datetime, amount, userMail }
         const ticket = await ticketModel.create(data)
         const dataCliente = `Su ticket de compra es ${JSON.stringify(data)} y los productos sin Stock son ${prodSinStock}`

@@ -34,11 +34,7 @@ class CartsMongoServices {
     }
 
     purchase = (cid, userMail) => {
-        let diaSemana = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
-        let mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-
-
-        return this.cartsMongoServices.purchase(cid, userMail, diaSemana, mes)
+        return this.cartsMongoServices.purchase(cid, userMail)
     }
 }
 

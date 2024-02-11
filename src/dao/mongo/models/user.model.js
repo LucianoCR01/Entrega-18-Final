@@ -8,7 +8,17 @@ const UserModel = mongoose.model("user", new mongoose.Schema({
     password: String,
     isUser: { type: Boolean, default: true },
     isAdmin: { type: Boolean, default: false },
-    premium: { type: Boolean, default: false }
+    premium: { type: Boolean, default: false },
+    documents: [
+        {
+            name: String,
+            reference: String
+        }
+    ],
+    last_connection: { type: String, default: "xxxxxxxxxx" },
+    identificacion: { type: Boolean, default: false },
+    domicilio: { type: Boolean, default: false },
+    cuenta: { type: Boolean, default: false },
 }))
 
 export default UserModel

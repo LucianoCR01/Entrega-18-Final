@@ -4,7 +4,7 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __dirname + "/public");
+        cb(null, __dirname + "/public/products");
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname);
@@ -12,6 +12,24 @@ const storage = multer.diskStorage({
 });
 
 export const uploader = multer({ storage });
+
+////////////////////Multer Para /api/session/uid/documents//////////
+const storageDocuments = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // Seleccionar la carpeta de destino según el tipo de archivo
+        if (file.fieldname === 'image') {
+            cb(null, 'uploads/images/');
+        } else if (file.fieldname === 'document') {
+            cb(null, 'uploads/documents/');
+        } else {
+            cb(new Error('Tipo de archivo no válido'));
+        }
+    },
+    filename: function (req, file, cb) {
+        // Definir el nombre del archivo (puedes personalizar según tus necesidades)
+        cb(null, file.originalname);
+    }
+})
 
 ///////////////////Dirname y Filename///////////////////////////////
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
@@ -103,3 +121,13 @@ export const generateRandomString = (num) => {
         .toUpperCase()
 }
 
+
+/////////////////////////////////Fecha y hora////////////////////////////
+
+export const dateTime = () => {
+    let fecha = new Date()
+    let diaSemana = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+    let mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+    let purchase_datetime = `${diaSemana[fecha.getDay()]}, ${fecha.getDate()} de ${mes[fecha.getMonth()]} de ${fecha.getFullYear()} a las ${fecha.toLocaleTimeString()}`
+    return purchase_datetime
+}

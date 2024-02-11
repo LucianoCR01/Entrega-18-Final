@@ -22,7 +22,6 @@ import { mokingProducts } from "./routes/mokingProducts.router.js";
 import { addLogger } from "./logger/loggers.js";
 import { loggerTest } from "./routes/test.router.js";
 import { nodeMailer } from "./routes/nodeMailer.js";
-import { userRol } from "./routes/userRol.router.js";
 
 
 dotenv.config()
@@ -91,7 +90,6 @@ const specs = swaggerJSDoc(swaggerOptions)
 
 //Endpoints
 app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
-app.use("/api/users/premium", userRol)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/handlebars", handlebarsRouter)
