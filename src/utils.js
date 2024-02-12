@@ -1,6 +1,46 @@
+//////////Multer Avanzado////////////
+import multer from "multer";
+
+let arrFieldname = []
+export function uploadFile() {
+    const storage = multer.diskStorage({
+        //destination: "./src/public/documents",
+        destination: function (req, file, cb) {
+            // Seleccionar la carpeta de destino según el tipo de archivo
+            if (file.fieldname == 'identificacion') {
+                arrFieldname.push("identificacion")
+                cb(null, './src/public/profiles');
+            } else if (file.fieldname == 'domicilio') {
+                arrFieldname.push("domicilio")
+                cb(null, './src/public/documents');
+            } else if (file.fieldname == 'cuenta') {
+                arrFieldname.push("cuenta")
+                cb(null, './src/public/documents');
+            } else if (file.fieldname == 'producto') {
+                cb(null, './src/public/products');
+            } else {
+                cb(new Error('Tipo de archivo no válido'));
+            }
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    });
+
+    const upload = multer({ storage }).fields([
+        { name: 'identificacion', maxCount: 1 },
+        { name: 'domicilio', maxCount: 1 },
+        { name: 'cuenta', maxCount: 1 },
+        { name: 'producto', maxCount: 1 },
+    ]);
+    return upload
+}
+
+export function getArrFieldname() {
+    return arrFieldname;
+}
 
 ////////////////////////Multer ////////////////////////
-import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -13,23 +53,6 @@ const storage = multer.diskStorage({
 
 export const uploader = multer({ storage });
 
-////////////////////Multer Para /api/session/uid/documents//////////
-const storageDocuments = multer.diskStorage({
-    destination: function (req, file, cb) {
-        // Seleccionar la carpeta de destino según el tipo de archivo
-        if (file.fieldname === 'image') {
-            cb(null, 'uploads/images/');
-        } else if (file.fieldname === 'document') {
-            cb(null, 'uploads/documents/');
-        } else {
-            cb(new Error('Tipo de archivo no válido'));
-        }
-    },
-    filename: function (req, file, cb) {
-        // Definir el nombre del archivo (puedes personalizar según tus necesidades)
-        cb(null, file.originalname);
-    }
-})
 
 ///////////////////Dirname y Filename///////////////////////////////
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/

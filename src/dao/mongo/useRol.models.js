@@ -8,10 +8,14 @@ class UserRolModels {
             return findUser
         }
         if (findUser.isUser) {
-            findUser.isUser = false
-            findUser.premium = true
-            await findUser.save()
-            return findUser
+            if (findUser.identificacion && findUser.domicilio && findUser.cuenta) {
+                findUser.isUser = false
+                findUser.premium = true
+                await findUser.save()
+                return findUser
+            } else {
+                return { error: "Debe terminar de subir su documentacion" }
+            }
         }
         if (findUser.premium) {
             findUser.premium = false

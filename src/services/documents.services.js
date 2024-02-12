@@ -5,8 +5,8 @@ class UpdateFileService {
         this.updateFileService = new UpdateFile
     }
 
-    sendDoc = (uid) => {
-        return this.updateFileService.fileProfile(uid)
+    sendDoc = (uid, data) => {
+        return this.updateFileService.fileProfile(uid, data)
     }
 
 }

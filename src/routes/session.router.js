@@ -4,7 +4,7 @@ import { Router } from "express";
 import passport from "passport";
 import { changeRol } from "../controllers/userRol.controller.js";
 import UserModel from "../dao/mongo/models/user.model.js";
-import { dateTime } from "../utils.js";
+import { dateTime, uploadFile } from "../utils.js";
 import { sendDocuments } from "../controllers/documents.controllers.js";
 
 const sessionRouter = Router()
@@ -85,6 +85,9 @@ sessionRouter.get("/logout", async (req, res) => {
 // )
 
 sessionRouter.get("/premium/:uid", changeRol)
-sessionRouter.post("/:uid/documents", sendDocuments)
+
+sessionRouter.post("/:uid/documents", uploadFile(), sendDocuments)
+
+
 
 export default sessionRouter
