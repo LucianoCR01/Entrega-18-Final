@@ -5,8 +5,24 @@ class UserRolService {
         this.userRolService = new UserRolModels()
     }
 
-    changeRol = (uid) => {
-        return this.userRolService.changeRol(uid)
+    changeRol = (email) => {
+        return this.userRolService.changeRol(email)
+    }
+
+    userGet = () => {
+        return this.userRolService.userGet()
+    }
+
+    deleteUsers = () => {
+        return this.userRolService.deleteUsers()
+    }
+
+    searchUser = (email) => {
+        return this.userRolService.searchUser(email)
+    }
+
+    fetchDeleteUser = (email) => {
+        return this.userRolService.fetchDeleteUser(email)
     }
 }
 

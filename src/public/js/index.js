@@ -66,7 +66,6 @@ socket.on("listProdSocke", listProdSocke => {
     }
 })
 
-
 formeliminar.onsubmit = (e) => {
     e.preventDefault();
     const prodEliminar = {

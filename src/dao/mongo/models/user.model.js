@@ -15,7 +15,7 @@ const UserModel = mongoose.model("user", new mongoose.Schema({
             reference: String
         }
     ],
-    last_connection: { type: String, default: "xxxxxxxxxx" },
+    last_connection: { type: Date, default: new Date() },
     identificacion: { type: Boolean, default: false },
     domicilio: { type: Boolean, default: false },
     cuenta: { type: Boolean, default: false },

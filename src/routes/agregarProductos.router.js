@@ -15,6 +15,6 @@ agregarProductos.delete("/:pid", auth, deleteOneAGR)
 
 function auth(req, res, next) {
     const user = req.session.user ?? false
-    if (user.role == "isAdmin" || "premium") return next()
+    if (user.isAdmin == true || user.premium == true) return next()
     res.redirect("/")
 }

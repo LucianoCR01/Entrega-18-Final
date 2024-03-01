@@ -2,9 +2,9 @@ import { Router } from "express";
 //import UserModel from "../dao/models/user.model.js"
 //import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
-import { changeRol } from "../controllers/userRol.controller.js";
+import { changeRol, deleteUsers, fetchDeleteUser, getUser, searchUser } from "../controllers/userRol.controller.js";
 import UserModel from "../dao/mongo/models/user.model.js";
-import { dateTime, uploadFile } from "../utils.js";
+import { uploadFile } from "../utils.js";
 import { sendDocuments } from "../controllers/documents.controllers.js";
 
 const sessionRouter = Router()
@@ -46,7 +46,6 @@ sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "
     if (!req.user) {
         return res.status(400).send({ status: "error", error: "Invalid credentials" })
     }
-
     req.session.user = {
         first_name: req.user.first_name,
         last_name: req.user.last_name,
@@ -56,16 +55,16 @@ sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "
         isAdmin: req.user.isAdmin,
         premium: req.user.premium
     }
-
-    const updateTime = await UserModel.findOneAndUpdate({ email: req.session.user.email }, { last_connection: dateTime() })
+    const date = new Date()
+    const updateTime = await UserModel.findOneAndUpdate({ email: req.session.user.email }, { last_connection: date })
     res.redirect("/productsMongo")
 })
 
 sessionRouter.get("/logout", async (req, res) => {
-    const updateTime = await UserModel.findOneAndUpdate({ email: req.session.user.email }, { last_connection: dateTime() })
+    const date = new Date()
+    const updateTime = await UserModel.findOneAndUpdate({ email: req.session.user.email }, { last_connection: date })
     req.session.destroy(err => {
         if (err) return res.send("Logout error")
-
         res.redirect("/")
     })
 })
@@ -84,10 +83,17 @@ sessionRouter.get("/logout", async (req, res) => {
 //     }
 // )
 
-sessionRouter.get("/premium/:uid", changeRol)
-
+sessionRouter.get("/premium/:email", changeRol)
+sessionRouter.get("/", getUser)
+sessionRouter.delete("/", deleteUsers)
 sessionRouter.post("/:uid/documents", uploadFile(), sendDocuments)
+sessionRouter.get("/admin/:email", auth, searchUser)
+sessionRouter.get("/delete/:email", fetchDeleteUser)
 
-
+function auth(req, res, next) {
+    const user = req.session.user ?? false
+    if (user.isAdmin == true) return next()
+    res.redirect("/")
+}
 
 export default sessionRouter

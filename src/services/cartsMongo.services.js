@@ -9,8 +9,16 @@ class CartsMongoServices {
         return this.cartsMongoServices.createCart()
     }
 
-    findCart = (idCart) => {
-        return this.cartsMongoServices.findCart(idCart)
+    findCart = async (idCart) => {
+        const prodCarts = await this.cartsMongoServices.findCart(idCart)
+        const filteredData = prodCarts.productos.map(obj => {
+            return {
+                title: obj.product.title,
+                price: obj.product.price,
+                quantity: obj.quantity
+            };
+        })
+        return filteredData
     }
 
     agregatedProduct = (idCart, idProduct) => {
@@ -35,6 +43,21 @@ class CartsMongoServices {
 
     purchase = (cid, userMail) => {
         return this.cartsMongoServices.purchase(cid, userMail)
+    }
+
+    finishBuy = async (idCart) => {
+        const prodCarts = await this.cartsMongoServices.findCart(idCart)
+        const filteredData = prodCarts.productos.map(obj => {
+            return {
+                price: obj.product.price,
+                quantity: obj.quantity
+            };
+        })
+        let c = 0
+        filteredData.forEach(element => {
+            c += element.price * element.quantity
+        });
+        return c
     }
 }
 

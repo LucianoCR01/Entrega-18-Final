@@ -53,13 +53,31 @@ const storage = multer.diskStorage({
 
 export const uploader = multer({ storage });
 
-
 ///////////////////Dirname y Filename///////////////////////////////
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
 import path from "path";
 import { fileURLToPath } from "url";
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
+/////////////////////NodeMailer////////////////////////
+import nodemailer from "nodemailer"
+const transport = nodemailer.createTransport({
+    service: "gmail",
+    port: 587,
+    auth: {
+        user: "lucianoloki@gmail.com",
+        pass: "gcbhgzxhtyfxcqhn"
+    }
+})
+const result = (email) => {
+    return {
+        from: "lucianoloki@gmail.com",
+        to: email,
+        subject: "Producto Eliminado",
+        html: `<div><h1>Eliminaron un producto que vos creaste<h1/></div>`,
+    }
+}
+
 /////////////////socket IO////////////////////
 import AgregarProdService from "./services/agregarProductos.services.js";
 import { Server } from "socket.io";
@@ -85,6 +103,7 @@ export function connectSocket(httpServer) {
             const findUser = await UserModel.findOne({ email: prodEliminar.userMail })
             if (findUser.isAdmin || findProd.owner == findUser.email) {
                 const delProdSocke = await productModel.deleteOne({ _id: prodEliminar.id_Eliminar })
+                transport.sendMail(result(findUser.email))
                 socket.emit("delProdSocke", delProdSocke)
             } else {
                 console.log("No puedes eliminar un producto que no es tuyo")

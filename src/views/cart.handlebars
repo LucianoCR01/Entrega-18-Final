@@ -1,0 +1,18 @@
+{{#each dataCart}}
+<ul>
+    <li>Producto: {{this.title}}</li>
+    <li>Price: {{this.price}}</li>
+    <li>Cantidad: {{this.quantity}}</li>
+</ul>
+{{/each}}
+
+<button onclick="buy()">Comprar</button>
+
+<script>
+    function buy() {
+        const currentUrl = window.location.href;
+        const urlParts = currentUrl.split("/");
+        const id = urlParts.slice(-1)[0]
+        window.location.href = `http://localhost:8080/cartsMongo/finishBuy/${id}`
+    }
+</script>

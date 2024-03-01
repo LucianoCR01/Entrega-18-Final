@@ -1,4 +1,8 @@
 import CartsMongoServices from "../services/cartsMongo.services.js";
+// SDK de Mercado Pago
+import { MercadoPagoConfig, Preference } from 'mercadopago';
+// Agrega credenciales
+const client = new MercadoPagoConfig({ accessToken: 'TEST-2185294003022118-022916-fa1c23c1ca3bbc7d3527b2c333343ed7-306272737' });
 
 const cartsMongoServices = new CartsMongoServices()
 
@@ -22,11 +26,8 @@ export const createCart = async (req, res) => {
 export const findCart = async (req, res) => {
     try {
         const idCart = req.params.cid
-        return res.status(200).json({
-            status: "success",
-            msg: "Carrito Buscado",
-            data: await cartsMongoServices.findCart(idCart)
-        })
+        const dataCart = await cartsMongoServices.findCart(idCart)
+        return res.status(200).render("cart", { dataCart })
     } catch (e) {
         console.log(e);
         return res.status(500).json({
@@ -149,6 +150,52 @@ export const purchase = async (req, res) => {
             status: "error",
             msg: "something went wrong :(",
             data: {},
+        })
+    }
+}
+
+export const finishBuy = async (req, res) => {
+    try {
+        const idCart = req.params.cid
+        const totalPrice = await cartsMongoServices.finishBuy(idCart)
+        return res.status(200).render("finishBuy", { totalPrice })
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            status: "error",
+            msg: "something went wrong :(",
+            data: {},
+        });
+    }
+}
+
+export const finishMercadoPago = async (req, res) => {
+    try {
+        const body = {
+            items: [
+                {
+                    quantity: 1,
+                    unit_price: Number(req.body.price),
+                    currency_id: "ARS",
+                },
+            ],
+            ///////En la doc de MercadoPago no se puede usar el entorno local para las back urls/////////
+            back_urls: {
+                success: "https://es.textstudio.com/logo/182/Successful",
+                failure: "https://www.istockphoto.com/es/vector/dejar-el-sello-de-tinta-gm951985126-259883383",
+                pending: "https://stock.adobe.com/es/search?k=pending"
+            },
+            auto_return: "approved",
+        }
+        const preference = new Preference(client)
+        const result = await preference.create({ body })
+        res.json({
+            id: result.id,
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            error: "error al crear preferencia"
         })
     }
 }

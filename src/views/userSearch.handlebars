@@ -1,0 +1,41 @@
+<h1>Apellido {{last_name}}</h1>
+<h1>Email {{email}}</h1>
+<h1>IsUser {{isUser}}</h1>
+<h1>IsAdmin {{isAdmin}}</h1>
+<h1>Premium {{premium}}</h1>
+<button onclick="changeRol('{{email}}')">Cambiar Rol</button>
+<button onclick="deleteUsu('{{email}}')">Eliminar Usuario</button>
+
+<script>
+    function changeRol(email) {
+        const url = "http://localhost:8080/api/session/premium/" + email;
+        // Manejar las respuestas de éxito y error
+        fetch(url)
+            .then((response) => {
+                if (response.ok) {
+                    // Recargar la página
+                    location.reload();
+                } else {
+                    // Manejar el error
+                    console.error("Error:", response.statusText);
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+    function deleteUsu(email) {
+        const url = "http://localhost:8080/api/session/delete/" + email;
+        // Manejar las respuestas de éxito y error
+        fetch(url)
+            .then((response) => {
+                if (response.ok) {
+                    // Recargar la página
+                    window.location.href = "http://localhost:8080"
+                } else {
+                    // Manejar el error
+                    console.error("Error:", response.statusText);
+                }
+            })
+            .catch(err => console.log(err))
+    }
+</script>

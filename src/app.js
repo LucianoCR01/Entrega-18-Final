@@ -22,7 +22,7 @@ import { mokingProducts } from "./routes/mokingProducts.router.js";
 import { addLogger } from "./logger/loggers.js";
 import { loggerTest } from "./routes/test.router.js";
 import { nodeMailer } from "./routes/nodeMailer.js";
-
+import cors from "cors"
 
 dotenv.config()
 
@@ -40,6 +40,7 @@ const httpServer = app.listen(PORT, () => {
 connectSocket(httpServer)
 
 //Config para usar JSON en los POST
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")));
