@@ -24,7 +24,6 @@ class AgregarProdModels {
 
     async deleteOneAGR(ProductId) {
         const result = await productModel.findOneAndDelete({ _id: ProductId })
-        console.log(result)
         return result
     }
 }

@@ -1,5 +1,11 @@
 import CartsModelsMongo from "../dao/mongo/mongoCarts.models.js";
 import nodemailer from "nodemailer"
+import dotenv from "dotenv"
+
+dotenv.config()
+
+const authUser = process.env.authUser
+const authPass = process.env.authPass
 
 class CartsMongoServices {
     constructor() {
@@ -48,8 +54,8 @@ class CartsMongoServices {
             service: "gmail",
             port: 587,
             auth: {
-                user: "lucianoloki@gmail.com",
-                pass: "gcbhgzxhtyfxcqhn"
+                user: authUser,
+                pass: authPass
             }
         })
         const result = {
@@ -62,8 +68,9 @@ class CartsMongoServices {
         return data
     }
 
-    finishBuy = async (idCart) => {
+    finishBuy = async (idCart, userMail) => {
         const prodCarts = await this.cartsMongoServices.findCart(idCart)
+        const sendEmail = await this.cartsMongoServices.purchase(idCart, userMail)
         const filteredData = prodCarts.productos.map(obj => {
             return {
                 price: obj.product.price,

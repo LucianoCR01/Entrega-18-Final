@@ -3,6 +3,12 @@ import nodemailer from "nodemailer"
 import UserModel from "../dao/mongo/models/user.model.js";
 import { createHash, generateRandomString, isValidPassword } from "../utils.js";
 import UserPasswordModel from "../dao/mongo/models/userPassword.model.js";
+import dotenv from "dotenv"
+
+dotenv.config()
+
+const authUser = process.env.authUser
+const authPass = process.env.authPass
 
 export const nodeMailer = Express.Router()
 
@@ -22,8 +28,8 @@ nodeMailer.post("/", async (req, res) => {
         service: "gmail",
         port: 587,
         auth: {
-            user: "lucianoloki@gmail.com",
-            pass: "gcbhgzxhtyfxcqhn"
+            user: authUser,
+            pass: authPass
         }
     })
     const result = {

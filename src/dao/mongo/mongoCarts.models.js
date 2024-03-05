@@ -32,7 +32,6 @@ class CartsModelsMongo {
             if (product.owner == userInfo.mail) {
                 throw new Error("Este producto te pertenece, no lo puedes agregar")
             }
-
             try {
                 if (!doc) {
                     throw new Error('Carrito no encontrado');
@@ -46,9 +45,7 @@ class CartsModelsMongo {
             } catch (error) {
                 throw error;
             }
-
         }
-
         try {
             if (!doc) {
                 throw new Error('Carrito no encontrado');

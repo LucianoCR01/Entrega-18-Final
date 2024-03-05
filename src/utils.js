@@ -1,3 +1,7 @@
+import dotenv from "dotenv"
+
+dotenv.config()
+
 //////////Multer Avanzado////////////
 import multer from "multer";
 
@@ -119,7 +123,8 @@ export function connectSocket(httpServer) {
 }
 ///////////////////////Mongoose//////////////////
 import mongoose from "mongoose";
-const url = "mongodb+srv://luciano:lucianoCoder@coderbackend.mnsz0hb.mongodb.net/?retryWrites=true&w=majority"
+
+const url = process.env.mongoUrl
 
 mongoose.connect(url, { dbName: "CoderHouse" })
     .then(() => {

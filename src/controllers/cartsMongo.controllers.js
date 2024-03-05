@@ -2,7 +2,11 @@ import CartsMongoServices from "../services/cartsMongo.services.js";
 // SDK de Mercado Pago
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 // Agrega credenciales
-const client = new MercadoPagoConfig({ accessToken: 'TEST-2185294003022118-022916-fa1c23c1ca3bbc7d3527b2c333343ed7-306272737' });
+import dotenv from "dotenv"
+
+dotenv.config()
+const accessToken = process.env.accessToken
+const client = new MercadoPagoConfig({ accessToken: accessToken });
 
 const cartsMongoServices = new CartsMongoServices()
 
@@ -157,7 +161,8 @@ export const purchase = async (req, res) => {
 export const finishBuy = async (req, res) => {
     try {
         const idCart = req.params.cid
-        const totalPrice = await cartsMongoServices.finishBuy(idCart)
+        const userMail = req.session.user.email
+        const totalPrice = await cartsMongoServices.finishBuy(idCart, userMail)
         return res.status(200).render("finishBuy", { totalPrice })
     } catch (e) {
         console.log(e);

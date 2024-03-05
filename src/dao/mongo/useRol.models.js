@@ -1,6 +1,11 @@
 import nodemailer from "nodemailer"
 import UserModel from "./models/user.model.js"
+import dotenv from "dotenv"
 
+dotenv.config()
+
+const authUser = process.env.authUser
+const authPass = process.env.authPass
 
 class UserRolModels {
     async changeRol(email) {
@@ -41,8 +46,8 @@ class UserRolModels {
             service: "gmail",
             port: 587,
             auth: {
-                user: "lucianoloki@gmail.com",
-                pass: "gcbhgzxhtyfxcqhn"
+                user: authUser,
+                pass: authPass
             }
         })
 

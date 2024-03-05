@@ -28,8 +28,6 @@ formProducts.onsubmit = (e) => {
         owner: userMail
     };
 
-
-
     socket.emit("newProduct", newProduct);
     formProducts.reset();
 };
@@ -46,6 +44,7 @@ socket.on("listProdSocke", listProdSocke => {
                 dibujarTabla(datos.data)
             })
     }
+
     function dibujarTabla(datos) {
         tabla.innerHTML = "";
         for (let valor of datos) {

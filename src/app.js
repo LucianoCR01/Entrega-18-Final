@@ -17,12 +17,12 @@ import sessionRouter from "./routes/session.router.js";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import initializePassportGitHub from "./config/passport-Github.config.js";
-import dotenv from "dotenv"
 import { mokingProducts } from "./routes/mokingProducts.router.js";
 import { addLogger } from "./logger/loggers.js";
 import { loggerTest } from "./routes/test.router.js";
 import { nodeMailer } from "./routes/nodeMailer.js";
 import cors from "cors"
+import dotenv from "dotenv"
 
 dotenv.config()
 
