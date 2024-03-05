@@ -35,6 +35,11 @@ function putIntoCart(_id) {
         });
 }
 
+function Comprar() {
+    const url = API_URL + "/cartsMongo/" + cartId
+    window.location.href = url
+}
+
 if (!cartId) {
     alert("Ingrese el ID de su Carrito");
     const url = API_URL + "/api/carts";

@@ -98,32 +98,35 @@ class CartsModelsMongo {
     }
 
     async purchase(cid, userMail) {
-        const findCart = await CartsModel.findOne({ _id: cid })
+        const filter = { _id: cid }
+        const findCart = await CartsModel.findOne(filter)
         const prodCart = findCart.productos
 
         let amount = 0
         const prodSinStock = []
+        const newArray = []
         prodCart.forEach(async element => {
             let checkStock = element.product.stock - element.quantity
             if (checkStock < 0) {
                 let _id = element.product._id
                 let idLimpio = _id._id.toString().replace(/ObjectId\("(.*)"\)/, "$1")
-                prodSinStock.push(idLimpio)
+                let quantity = element.quantity
+                prodSinStock.push({ idLimpio })
+                newArray.push({ product: _id, quantity })
             } else {
                 amount = amount + element.quantity * element.product.price
                 const idProd = element.product._id
                 const product = await productModel.findOne({ _id: idProd })
                 product.stock = product.stock - element.quantity
-                this.deleteProduct(cid, idProd)
                 await product.save()
             }
         });
+        const replaceCart = await CartsModel.findByIdAndUpdate(filter, { $set: { productos: newArray } })
         let code = crypto.randomUUID()
         let purchase_datetime = dateTime()
         let data = { code, purchase_datetime, amount, userMail }
         const ticket = await ticketModel.create(data)
         const dataCliente = `Su ticket de compra es ${JSON.stringify(data)} y los productos sin Stock son ${prodSinStock}`
-
         return dataCliente
     }
 }

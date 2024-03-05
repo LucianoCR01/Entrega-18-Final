@@ -1,4 +1,5 @@
 import CartsModelsMongo from "../dao/mongo/mongoCarts.models.js";
+import nodemailer from "nodemailer"
 
 class CartsMongoServices {
     constructor() {
@@ -41,8 +42,24 @@ class CartsMongoServices {
         return this.cartsMongoServices.eliminarProdCarrito(cid)
     }
 
-    purchase = (cid, userMail) => {
-        return this.cartsMongoServices.purchase(cid, userMail)
+    purchase = async (cid, userMail) => {
+        const data = await this.cartsMongoServices.purchase(cid, userMail)
+        const transport = nodemailer.createTransport({
+            service: "gmail",
+            port: 587,
+            auth: {
+                user: "lucianoloki@gmail.com",
+                pass: "gcbhgzxhtyfxcqhn"
+            }
+        })
+        const result = {
+            from: "lucianoloki@gmail.com",
+            to: userMail,
+            subject: "Ticket Compra",
+            html: `<div><h1>${data}<h1/></div>`,
+        }
+        transport.sendMail(result)
+        return data
     }
 
     finishBuy = async (idCart) => {
