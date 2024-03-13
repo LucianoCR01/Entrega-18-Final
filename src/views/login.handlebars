@@ -1,17 +1,38 @@
 <h1>Login</h1>
 
 <div>
-    <ul>
-        <li><a href="/login-github">Iniciar Session con Github</a></li>
-    </ul>
+    <a class="icon-link" href="/login-github">
+        Iniciar Session con Github
+        <svg class="bi" aria-hidden="true">
+            <use xlink:href="#arrow-right"></use>
+        </svg>
+    </a>
 </div>
-
+<br>
 <form action="/api/session/login" method="post" id="form-login">
     Email: <input type="email" name="email" id="inputLogin"><br>
-    Password: <input type="text" name="password">
-
-    <button type="submit">Login</button>
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+            <label for="inputPassword6" class="col-form-label">Password</label>
+        </div>
+        <div class="col-auto">
+            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline"
+                name="password">
+        </div>
+        <div class="col-auto">
+            <span id="passwordHelpInline" class="form-text">
+                Must be 8-20 characters long.
+            </span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-outline-primary">Login</button>
 </form>
-
-<p><a href="http://localhost:8080/forget-password">Olvidaste tu password</a></p>
+<br>
+<a class="icon-link icon-link-hover link-success link-underline-success link-underline-opacity-25"
+    href="http://localhost:8080/forget-password">
+    Olvidaste tu password
+    <svg class="bi" aria-hidden="true">
+        <use xlink:href="#arrow-right"></use>
+    </svg>
+</a>
 <script src="/js/login.index.js"></script>

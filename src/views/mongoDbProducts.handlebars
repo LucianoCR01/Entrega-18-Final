@@ -1,8 +1,9 @@
 {{#if user}}
-<h2>Welcome, {{user.firstName}} {{user.lastName}}</h2>
+<h2>Welcome {{user.firstName}} {{user.lastName}}</h2>
 <p>Email: {{user.email}}</p>
+
 {{#if user.isAdmin}}
-<p>Role: Admin</p>
+<div>Role: Administrador</div>
 {{/if}}
 {{#if user.isUser}}
 <p>Role: Usuario</p>
@@ -41,19 +42,21 @@
     <h1>La lista de productos es: </h1>
     <h3>page {{products.rest.page}}</h3>
     {{#each products.productos}}
-    <ul>
-        <li>Nombre : {{this.title}}</li>
-        <li>Descripcion : {{this.description}}</li>
-        <li>Precio : {{this.price}}</li>
-        <li>Code : {{this.code}}</li>
-        <li>Stock : {{this.stock}}</li>
-        <li>Categoria : {{this.category}}</li>
-        <li>Imagen : {{this.picture}}</li>
-        <li>Owner : {{this.owner}}</li>
-        <a href="/productsMongo/{{this._id}}">View details of {{this._id}}</a>
-        <br>
-        <button onclick="putIntoCart('{{this._id}}')">Add to cart {{this._id}}</button>
-    </ul>
+    <div class="card" style="width: 18rem; margin: 10px;">
+        <div class="card-body">
+            <h5 class="card-title">{{this.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{this.price}}$</h6>
+            <p class="card-text">Descripcion : {{this.description}}</p>
+            <p class="card-text">Code : {{this.code}}</p>
+            <p class="card-text">Stock : {{this.stock}}</p>
+            <p class="card-text">Categoria : {{this.category}}</p>
+            <p class="card-text">Owner : {{this.owner}}</p>
+            <a href="/productsMongo/{{this._id}}" class="card-link">View details</a>
+            <br>
+            <button id="addToCartButton" class="btn btn-success" onclick="putIntoCart('{{this._id}}')">Add to
+                cart</button>
+        </div>
+    </div>
     {{/each}}
     {{#if products.rest.hasPrevPage}}
     <a href="/productsMongo?page={{products.rest.prevPage}}">⬅️{{products.rest.prevPage}}</a>
@@ -75,5 +78,5 @@
     <p>pagina anterior {{products.rest.prevPage}}</p>
     <p>pagina siguiente {{products.rest.nextPage}}</p>
 </div>
-<button id="mi-boton" onclick="Comprar()">Ver Carrito</button>
+<button id="mi-boton" onclick="Comprar()" class="btn btn-danger">Ver Carrito</button>
 <script src="/js/mongoProducts.index.js"></script>

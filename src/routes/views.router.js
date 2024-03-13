@@ -44,7 +44,6 @@ viewsRouter.get("/login-github", passport.authenticate("github", { scope: ["user
 
 viewsRouter.get("/githubcallback", passport.authenticate("github", { failureRedirect: "/" }),
     async (req, res) => {
-        console.log("callback: ", req.user)
         req.session.user = req.user
         res.redirect("/")
     }

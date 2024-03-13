@@ -6,9 +6,9 @@ const UserModel = mongoose.model("user", new mongoose.Schema({
     email: String,
     age: Number,
     password: String,
-    isUser: { type: Boolean, default: true },
+    isUser: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false },
-    premium: { type: Boolean, default: false },
+    premium: { type: Boolean, default: true },
     documents: [
         {
             name: String,
@@ -16,9 +16,9 @@ const UserModel = mongoose.model("user", new mongoose.Schema({
         }
     ],
     last_connection: { type: Date, default: new Date() },
-    identificacion: { type: Boolean, default: false },
-    domicilio: { type: Boolean, default: false },
-    cuenta: { type: Boolean, default: false },
+    identificacion: { type: Boolean, default: true },
+    domicilio: { type: Boolean, default: true },
+    cuenta: { type: Boolean, default: true },
 }))
 
 export default UserModel

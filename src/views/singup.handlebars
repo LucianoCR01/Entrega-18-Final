@@ -1,11 +1,40 @@
 <h1>Sing Up</h1>
-
-<form action="/api/session/singup" method="post">
-    FirstName: <input type="text" name="first_name"><br>
-    LastName: <input type="text" name="last_name"><br>
-    Age: <input type="number" name="age"><br>
-    Email: <input type="email" name="email"><br>
-    Password: <input type="text" name="password">
-
-    <button type="submit">Sing Up</button>
+<form class="row g-3" action="/api/session/singup" method="post">
+    <div class="col-md-4">
+        <label for="validationDefault01" class="form-label">First name</label>
+        <input type="text" class="form-control" id="validationDefault01" name="first_name" required>
+    </div>
+    <div class="col-md-4">
+        <label for="validationDefault02" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="validationDefault02" name="last_name" required>
+    </div>
+    <div class="col-md-4">
+        <label for="validationDefaultUsername" class="form-label">Email</label>
+        <div class="input-group">
+            <span class="input-group-text" id="inputGroupPrepend2">@</span>
+            <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2"
+                name="email" required>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <label for="validationDefault02" class="form-label">Age</label>
+        <input type="number" class="form-control" id="validationDefault02" name="age" required>
+    </div>
+    <div class="row g-3 align-items-center">
+        <div class="col-auto">
+            <label for="inputPassword6" class="col-form-label">Password</label>
+        </div>
+        <div class="col-auto">
+            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline"
+                name="password">
+        </div>
+        <div class="col-auto">
+            <span id="passwordHelpInline" class="form-text">
+                Must be 8-20 characters long.
+            </span>
+        </div>
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </div>
 </form>

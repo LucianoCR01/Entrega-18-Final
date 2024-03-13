@@ -6,13 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My E-commerce</title>
+    <link rel="stylesheet" href="/bootstrap/styles.css">
 </head>
 
 <body>
-    <a href="/">Home</a><br>
-    <a href="/profile">Profile</a><br>
-    <a href="/login">Login</a><br>
-    <a href="/singup">Register</a><br>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/singup">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/productsMongo">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/agregarProductos">CRUD</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <hr>
     {{{body}}}
 </body>

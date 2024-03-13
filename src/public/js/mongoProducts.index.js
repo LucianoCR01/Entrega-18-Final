@@ -2,12 +2,10 @@
 const formcarrito = document.getElementById("form-Carrito");
 const inputCarrito = document.getElementById("inputCarrito")
 
-formcarrito.onsubmit = (e) => {
-    e.preventDefault();
+formcarrito.onsubmit = () => {
     localStorage.setItem("cart-id", inputCarrito.value)
     formcarrito.reset();
 };
-
 
 let cartId = localStorage.getItem("cart-id");
 const API_URL = "http://localhost:8080";

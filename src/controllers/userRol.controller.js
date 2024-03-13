@@ -35,7 +35,7 @@ export const getUser = async (req, res) => {
         }
 
         return {
-            last_name: obj.last_name,
+            last_name: obj.first_name,
             email: obj.email,
             role, // Asigna el valor de `role` al nuevo campo
         };

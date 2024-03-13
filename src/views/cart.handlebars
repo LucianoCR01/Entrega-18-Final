@@ -1,12 +1,14 @@
 {{#each dataCart}}
-<ul>
-    <li>Producto: {{this.title}}</li>
-    <li>Price: {{this.price}}</li>
-    <li>Cantidad: {{this.quantity}}</li>
-</ul>
+<div class="card" style="width: 18rem;  margin: 10px;">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Producto: {{this.title}}</li>
+        <li class="list-group-item">Price: {{this.price}}</li>
+        <li class="list-group-item">Cantidad: {{this.quantity}}</li>
+    </ul>
+</div>
 {{/each}}
 
-<button onclick="buy()">Comprar</button>
+<button onclick="buy()" class="btn btn-success">Comprar</button>
 
 <script>
     function buy() {
