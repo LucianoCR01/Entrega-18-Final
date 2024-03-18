@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer"
 import UserModel from "./models/user.model.js"
 import dotenv from "dotenv"
+import { CartsModel } from "./models/carts.model.js"
 
 dotenv.config()
 
@@ -75,6 +76,12 @@ class UserRolModels {
     async fetchDeleteUser(email) {
         const deleteUsu = await UserModel.findOneAndDelete({ email: email })
         return deleteUsu
+    }
+
+    async loginUser(email, date) {
+        const updateTime = await UserModel.findOneAndUpdate({ email }, { last_connection: date })
+        const findCart = await CartsModel.findOne({ email })
+        return findCart
     }
 }
 export default UserRolModels

@@ -2,7 +2,7 @@ import { Router } from "express";
 //import UserModel from "../dao/models/user.model.js"
 //import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
-import { changeRol, deleteUsers, fetchDeleteUser, getUser, searchUser } from "../controllers/userRol.controller.js";
+import { changeRol, deleteUsers, fetchDeleteUser, getUser, loginUser, searchUser } from "../controllers/userRol.controller.js";
 import UserModel from "../dao/mongo/models/user.model.js";
 import { uploadFile } from "../utils.js";
 import { sendDocuments } from "../controllers/documents.controllers.js";
@@ -42,23 +42,7 @@ sessionRouter.post("/singup", passport.authenticate("register", { failureRedirec
 //     res.redirect("/profile")
 // })
 
-sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "/failRegister" }), async (req, res) => {
-    if (!req.user) {
-        return res.status(400).send({ status: "error", error: "Invalid credentials" })
-    }
-    req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
-        email: req.user.email,
-        age: req.user.age,
-        isUser: req.user.isUser,
-        isAdmin: req.user.isAdmin,
-        premium: req.user.premium
-    }
-    const date = new Date()
-    const updateTime = await UserModel.findOneAndUpdate({ email: req.session.user.email }, { last_connection: date })
-    res.redirect("/productsMongo")
-})
+sessionRouter.post("/login", passport.authenticate("login", { failureRedirect: "/failRegister" }), loginUser)
 
 sessionRouter.get("/logout", async (req, res) => {
     const date = new Date()

@@ -13,8 +13,8 @@ class CartsModelsMongo {
         return doc;
     }
 
-    async createCart(productos) {
-        const cartCreated = await CartsModel.create({ productos })
+    async createCart() {
+        const cartCreated = await CartsModel.create()
         return cartCreated
     }
 

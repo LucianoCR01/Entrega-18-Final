@@ -1,4 +1,5 @@
 import UserRolModels from "../dao/mongo/useRol.models.js";
+import { Server } from "socket.io";
 
 class UserRolService {
     constructor() {
@@ -23,6 +24,12 @@ class UserRolService {
 
     fetchDeleteUser = (email) => {
         return this.userRolService.fetchDeleteUser(email)
+    }
+
+    loginUser = (email) => {
+        const date = new Date()
+        const result = this.userRolService.loginUser(email, date)
+        return result
     }
 }
 

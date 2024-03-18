@@ -88,3 +88,21 @@ export const fetchDeleteUser = async (req, res) => {
     const user = await userRolController.fetchDeleteUser(email)
     return res.status(200).json({ data: user })
 }
+
+export const loginUser = async (req, res) => {
+    if (!req.user) {
+        return res.status(400).send({ status: "error", error: "Invalid credentials" })
+    }
+    req.session.user = {
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email,
+        age: req.user.age,
+        isUser: req.user.isUser,
+        isAdmin: req.user.isAdmin,
+        premium: req.user.premium
+    }
+    const userEmail = req.session.user.email
+    const insertDataUser = await userRolController.loginUser(userEmail)
+    res.redirect("/productsMongo")
+}

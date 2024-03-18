@@ -6,8 +6,7 @@ class MongoCartsService {
     }
 
     createCart = () => {
-        const productos = []
-        return this.mongoCartsService.createCart(productos)
+        return this.mongoCartsService.createCart()
     }
 
     findCart = (idCart) => {

@@ -2,6 +2,7 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const cartSchema = new Schema({
+    email: { type: String, default: "admin" },
     productos: {
         type: [
             {
