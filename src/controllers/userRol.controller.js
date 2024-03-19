@@ -106,3 +106,10 @@ export const loginUser = async (req, res) => {
     const insertDataUser = await userRolController.loginUser(userEmail)
     res.redirect("/productsMongo")
 }
+
+export const register = async (req, res) => {
+    const email = req.body.email
+    const insertDataUser = await userRolController.loginUser(email)
+    res.redirect("/login")
+}
+

@@ -24,7 +24,6 @@ function putIntoCart(_id) {
     fetch(url, options)
         .then((response) => response.json())
         .then((res) => {
-            console.log(res);
             alert("added");
         })
         .catch((error) => {
@@ -52,7 +51,6 @@ if (!cartId) {
     fetch(url, options)
         .then((response) => response.json())
         .then((data) => {
-            console.log("Response:", data);
             const cartId = localStorage.setItem("cart-id", data._id);
         })
         .catch((error) => {

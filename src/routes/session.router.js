@@ -2,7 +2,7 @@ import { Router } from "express";
 //import UserModel from "../dao/models/user.model.js"
 //import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
-import { changeRol, deleteUsers, fetchDeleteUser, getUser, loginUser, searchUser } from "../controllers/userRol.controller.js";
+import { changeRol, deleteUsers, fetchDeleteUser, getUser, loginUser, register, searchUser } from "../controllers/userRol.controller.js";
 import UserModel from "../dao/mongo/models/user.model.js";
 import { uploadFile } from "../utils.js";
 import { sendDocuments } from "../controllers/documents.controllers.js";
@@ -23,9 +23,7 @@ const sessionRouter = Router()
 //     res.redirect("/login")
 // })
 
-sessionRouter.post("/singup", passport.authenticate("register", { failureRedirect: "/failRegister" }), async (req, res) => {
-    res.redirect("/login")
-})
+sessionRouter.post("/singup", passport.authenticate("register", { failureRedirect: "/failRegister" }), register)
 
 // sessionRouter.post("/login", async (req, res) => {
 //     const { email, password } = req.body

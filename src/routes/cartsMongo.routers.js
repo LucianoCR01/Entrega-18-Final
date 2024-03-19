@@ -23,4 +23,4 @@ cartsMongo.get("/finishBuy/:cid", finishBuy)
 
 cartsMongo.post("/finishBuy", finishMercadoPago)
 
-cartsMongo.post("/", findCartController)
+cartsMongo.post("/:email", findCartController)

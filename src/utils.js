@@ -95,7 +95,6 @@ const agregarProdService = new AgregarProdService()
 export function connectSocket(httpServer) {
     const socketServer = new Server(httpServer)
     socketServer.on("connection", socket => {
-        console.log("Se abrio un Socket " + socket.id)
         socket.on("newProduct", async newProduct => {
             newProduct["status"] = true
             const result = await agregarProdService.createProdARG(newProduct)

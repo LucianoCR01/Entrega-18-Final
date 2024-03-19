@@ -206,7 +206,7 @@ export const finishMercadoPago = async (req, res) => {
 }
 
 export const findCartController = async (req, res) => {
-    const userMail = await req.session.user.email
+    const userMail = req.params.email
     const dataUser = await cartsMongoServices.findCartSimple(userMail)
     try {
         return res.status(200).json(dataUser)
