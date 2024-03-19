@@ -204,3 +204,16 @@ export const finishMercadoPago = async (req, res) => {
         })
     }
 }
+
+export const findCartController = async (req, res) => {
+    const userMail = await req.session.user.email
+    const dataUser = await cartsMongoServices.findCartSimple(userMail)
+    try {
+        return res.status(200).json(dataUser)
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            error: "error al crear preferencia"
+        })
+    }
+}

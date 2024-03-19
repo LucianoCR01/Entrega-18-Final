@@ -126,6 +126,11 @@ class CartsModelsMongo {
         const dataCliente = `Su ticket de compra es ${JSON.stringify(data)} y los productos sin Stock son ${prodSinStock}`
         return dataCliente
     }
+
+    async findCartSimple(idParam) {
+        const findCart = await CartsModel.findOne({ email: idParam })
+        return findCart
+    }
 }
 
 export default CartsModelsMongo

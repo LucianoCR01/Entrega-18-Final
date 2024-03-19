@@ -26,9 +26,12 @@ class UserRolService {
         return this.userRolService.fetchDeleteUser(email)
     }
 
-    loginUser = (email) => {
+    loginUser = async (email) => {
         const date = new Date()
-        const result = this.userRolService.loginUser(email, date)
+        const result = await this.userRolService.loginUser(email, date)
+        if (!result) {
+            const createCartUser = await this.userRolService.createCartUseRol(email)
+        }
         return result
     }
 }

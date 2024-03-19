@@ -1,5 +1,5 @@
 import express from "express";
-import { actualizarCantidad, agregatedProduct, createCart, deleteProduct, eliminarProdCarrito, findCart, finishBuy, finishMercadoPago, purchase, updateCarrito } from "../controllers/cartsMongo.controllers.js";
+import { actualizarCantidad, agregatedProduct, createCart, deleteProduct, eliminarProdCarrito, findCart, findCartController, finishBuy, finishMercadoPago, purchase, updateCarrito } from "../controllers/cartsMongo.controllers.js";
 
 export const cartsMongo = express.Router()
 
@@ -22,3 +22,5 @@ cartsMongo.get("/:cid/purchase", purchase)
 cartsMongo.get("/finishBuy/:cid", finishBuy)
 
 cartsMongo.post("/finishBuy", finishMercadoPago)
+
+cartsMongo.post("/", findCartController)

@@ -83,5 +83,9 @@ class UserRolModels {
         const findCart = await CartsModel.findOne({ email })
         return findCart
     }
+
+    async createCartUseRol(email) {
+        const createCartUser = await CartsModel.create({ email: email })
+    }
 }
 export default UserRolModels

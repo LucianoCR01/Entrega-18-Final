@@ -83,6 +83,11 @@ class CartsMongoServices {
         });
         return c
     }
+
+    findCartSimple = async (email) => {
+        const findData = await this.cartsMongoServices.findCartSimple(email)
+        return findData
+    }
 }
 
 export default CartsMongoServices
